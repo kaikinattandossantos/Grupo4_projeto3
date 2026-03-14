@@ -182,27 +182,9 @@ Acesse `http://localhost:8080/h2-console`
 
 ---
 
-## User Stories
-Dashboard de Performance ESG para Gestores (B2B): 
-https://docs.google.com/document/d/1VrfvtfznLYS2JGPi6cvNOtU5WpfmUA1Zkud63x_01C0/edit?usp=sharing
+## Histórias do Usuário
 
-Visualização de Adoção por Geolocalização (Mapa de Calor):
-https://docs.google.com/document/d/1XERd5ndeTRi2Y1V39n2I9rcCI7Q-uCzJQP4Ht5wHUUI/edit?usp=sharing
-
-Migração "One-Click" para Usuários Atuais:
-https://docs.google.com/document/d/1MylaudHA6GAxAuYUcKfET7PojAc6Ka87ZJKkPbUwZjQ/edit?usp=sharing
-
-Onboarding Digital Nativo para Novos Clientes:
-https://docs.google.com/document/d/1nUqSPmgN5TP_65SyZPlLN-YBTrsTBbeyPJQ9bNfFnF8/edit?usp=sharing
-
-Cadastro e Gestão de Fatores de Emissão: 
-https://docs.google.com/document/d/1EGZT9afw5jHhnCoOuMK9NJFKQK1ii7IO2KNZiYovpRQ/edit?usp=sharing
-
-Conversão para Métricas Lúdicas: 
-https://docs.google.com/document/d/1gu1gnE6k3mh7jF3TmJt4cUGe5mlHEBSw2LRqrm9QTcw/edit?usp=sharing
-
-Simulação de Comparativo Físico vs Digital: 
-https://docs.google.com/document/d/1b6ZUVR4KCLciLEMWilL4BZvtr77TcBJJnrmqyBr0p0A/edit?usp=sharing
+https://docs.google.com/document/d/1f34Oak4A2xPoKNDfj0yPCjTfBOlPhg7t7sWSJyowI3w/edit?tab=t.0
 
 ## Protótipo Lo-Fi
 [link para o Figma](https://www.figma.com/board/lZy6lebsYlZyLumOq8trZp/FigJam-Projetos-3?node-id=0-1&t=QaWe2uT1S32XltJd-1)
