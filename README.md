@@ -1,188 +1,39 @@
-# 🌿 Endered Green Dashboard
+# 🌿 GreenPay Impact
 
-> Dashboard de Impacto Ambiental — Plataforma de Cartões Digitais
-
-Aplicação Spring Boot que exibe em tempo real o impacto ambiental positivo gerado pela substituição de cartões físicos PVC por cartões digitais, incluindo mapa de calor interativo e sistema de solicitação de cartões.
+O desafio proposto pela Edenred é criar uma forma de **comparar o impacto ambiental entre transações feitas com cartões físicos e pagamentos digitais**. A ideia é ajudar empresas e clientes a entenderem melhor os benefícios da digitalização das operações, principalmente em relação à redução de emissões de carbono e uso de materiais físicos.
 
 ---
 
-## 🚀 Como Executar
+## 📌 Proposta
 
-### Pré-requisitos
-- **Java 21+** ([Download](https://adoptium.net/))
-- **Maven 3.8+** ([Download](https://maven.apache.org/download.cgi))
-
-### Passos
-
-```bash
-# 1. Entre na pasta do projeto
-cd endered-dashboard
-
-# 2. Instale as dependências e execute
-mvn spring-boot:run
-
-# 3. Abra no navegador
-# http://localhost:8080
-```
-
-> Na primeira execução, dados de demonstração são carregados automaticamente com 33 cartões digitais em cidades brasileiras.
+Propomos a criação de uma **calculadora de impacto ambiental** capaz de estimar indicadores como emissões de CO₂, consumo de energia, uso de materiais físicos e impactos logísticos relacionados à produção e distribuição de cartões. A partir dessas estimativas, buscamos permitir **comparações que ajudem a visualizar melhor esses impactos** e entender como a adoção de soluções digitais pode contribuir para a redução desses efeitos.
 
 ---
 
-## 🗂️ Estrutura do Projeto
+## 👥 Equipe
 
-```
-endered-dashboard/
-├── src/main/java/com/endered/dashboard/
-│   ├── EnderedDashboardApplication.java     # Ponto de entrada
-│   ├── config/
-│   │   └── DataSeeder.java                 # Dados demo iniciais
-│   ├── controller/
-│   │   ├── DashboardController.java        # API REST (/api/*)
-│   │   └── WebController.java             # Rotas web (/, /solicitar)
-│   ├── model/
-│   │   ├── DigitalCard.java               # Entidade JPA - Cartão Digital
-│   │   ├── ImpactoAmbiental.java          # Cálculos ambientais
-│   │   └── HeatMapPoint.java             # Ponto do mapa de calor
-│   ├── repository/
-│   │   └── DigitalCardRepository.java    # JPA Repository + queries
-│   └── service/
-│       └── DashboardService.java         # Lógica de negócio
-│
-├── src/main/resources/
-│   ├── templates/
-│   │   ├── dashboard.html                # Dashboard principal (Thymeleaf)
-│   │   └── solicitar.html               # Formulário de solicitação
-│   └── application.properties           # Configurações
-│
-└── pom.xml                              # Dependências Maven
-```
+Para uma melhor qualidade e eficiência no nosso projeto dividimos nossa equipe em 3 grupos sendo eles o de Negócios, Tech e Gestão
+
+### 💼 Negócios
+  Responsável por pesquisa de mercado, definição do problema, levantamento de requisitos e construção da proposta de valor do projeto
+- André (**afg@cesar.school**)
+- Danilo (**dmd@cesar.school**)
+- Júlia (**jmc3@cesar.school**)
+
+### 💻 Tech
+  Responsável pelo desenvolvimento técnico do projeto, incluindo protótipos, experimentação de tecnologias e implementação das funcionalidades
+- Caio (**cme@cesar.school**)
+- Kaiki (**knsg@cesar.school**)
+- Júlio (**jssn@cesar.school**)
+
+### 📈 Gestão
+  Responsável pelo acompanhamento do projeto, organização das entregas, planejamento e comunicação entre os membros da equipe.
+- Venâncio (**avvn@cesar.school**)
+- Victor (**vlns@cesar.school**)
 
 ---
 
-## 📡 API REST
-
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| `GET` | `/api/dashboard` | Todos os dados do dashboard (impacto + mapa + gráficos) |
-| `GET` | `/api/impacto` | Métricas ambientais calculadas |
-| `GET` | `/api/heatmap` | Pontos do mapa de calor por cidade |
-| `GET` | `/api/cartoes` | Lista todos os cartões cadastrados |
-| `POST` | `/api/cartoes` | Solicitar novo cartão digital |
-
-### Exemplo — Solicitar Cartão (POST `/api/cartoes`)
-
-```json
-{
-  "nomeCompleto": "Maria Silva",
-  "email": "maria@email.com",
-  "cpfCnpj": "123.456.789-00",
-  "telefone": "(11) 91234-5678",
-  "cidade": "São Paulo",
-  "estado": "SP",
-  "latitude": -23.5505,
-  "longitude": -46.6333,
-  "tipoCartao": "CARTAO_BENEFICIOS"
-}
-```
-
-### Tipos de Cartão
-- `CARTAO_BENEFICIOS`
-- `CARTAO_PRESENTE`
-- `CARTAO_FIDELIDADE`
-- `CARTAO_CORPORATIVO`
-
----
-
-## 🌍 Cálculo do Impacto Ambiental
-
-Os cálculos são baseados em estudos de ciclo de vida (LCA) de cartões PVC:
-
-| Indicador | Por Cartão Físico Evitado |
-|-----------|--------------------------|
-| CO₂ | 150g não emitidos |
-| Plástico PVC | 5g não gerados |
-| Água | 1,5L economizados |
-| Energia | 0,08 kWh poupados |
-| Equivalência em árvores | CO₂ ÷ 21,7 kg/ano por árvore |
-
----
-
-## 🗺️ Funcionalidades
-
-### Dashboard Principal (`/`)
-- **6 métricas ambientais** com contadores animados
-- **Mapa de calor interativo** (Leaflet.js + heat layer) mostrando concentração de digitalização por cidade
-- **Gráfico de barras** — solicitações mensais
-- **Gráfico donut** — distribuição por tipo de cartão
-- **Tabela** — últimas 10 solicitações com status
-- Auto-refresh a cada 30 segundos
-
-### Solicitação de Cartão (`/solicitar`)
-- Formulário validado com máscaras automáticas (CPF, telefone)
-- Seleção de cidade com coordenadas automáticas
-- Aprovação instantânea
-- Feedback visual de impacto individual após cadastro
-
----
-
-## 🛠️ Tecnologias
-
-| Categoria | Tecnologia |
-|-----------|-----------|
-| Backend | Spring Boot 3.2, Spring Data JPA, Bean Validation |
-| Banco de Dados | H2 In-Memory (dev) — troque por PostgreSQL em produção |
-| Template Engine | Thymeleaf |
-| Mapa | Leaflet.js + Leaflet.heat |
-| Gráficos | Chart.js 4.4 |
-| Fontes | Syne + DM Sans (Google Fonts) |
-
----
-
-## 🔧 Migrar para PostgreSQL (Produção)
-
-No `application.properties`:
-
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/endereddb
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto=update
-```
-
-No `pom.xml`, adicione:
-
-```xml
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <scope>runtime</scope>
-</dependency>
-```
-
----
-
-## 🖥️ Console H2 (Desenvolvimento)
-
-Acesse `http://localhost:8080/h2-console`
-
-- **JDBC URL:** `jdbc:h2:mem:endereddb`
-- **User:** `sa`
-- **Password:** *(vazio)*
-
----
-
-## 📸 Páginas
-
-- **`/`** — Dashboard com métricas, mapa de calor e gráficos
-- **`/solicitar`** — Formulário de solicitação de cartão digital
-- **`/api/dashboard`** — Endpoint JSON com todos os dados
-
----
-
-## Fluxo de Versionamento
+## ⚙️ Fluxo de Versionamento
 Para nosso projeto utilizamos baseado em Git Flow Simplificado e Commits Semânticos para uma organização completa do nosso repositório
 
 1. Modelo de Ramificações (Branching Model)
@@ -222,33 +73,78 @@ Para nosso projeto utilizamos baseado em Git Flow Simplificado e Commits Semânt
 
 ---
 
-## Histórias do Usuário
+## 🧪 Protótipo Teste
+Como parte da exploração da solução, foi desenvolvido com o ClaudeAI um protótipo inicial de dashboard web.
 
-https://docs.google.com/document/d/1f34Oak4A2xPoKNDfj0yPCjTfBOlPhg7t7sWSJyowI3w/edit?tab=t.0
+Esse protótipo **não representa o MVP do projeto**, mas sim um experimento criado para testar ideias de visualização e entender como os indicadores ambientais poderiam ser apresentados para usuários ou empresas.
 
-## Protótipo Lo-Fi
-[link para o Figma](https://www.figma.com/board/lZy6lebsYlZyLumOq8trZp/FigJam-Projetos-3?node-id=0-1&t=QaWe2uT1S32XltJd-1)
+A partir dele foi possível simular a exibição de métricas como:
+- estimativas de redução de emissões de CO₂
+- quantidade de plástico evitado
+- distribuição geográfica de solicitações
+- evolução das solicitações ao longo do tempo
+  
+O protótipo também inclui uma interface simples para simulação de solicitações de cartões digitais, que alimentam os dados exibidos no dashboard.
 
-## Screencast
-link para o vídeo no YouTube
+Essa implementação foi utilizada principalmente como **prova de conceito**, ajudando a explorar possíveis formas de estruturar os dados e apresentar as informações antes da construção da solução definitiva do projeto.
 
+### Como Executar
+OBS: É necessário Java 21+ ([Download](https://adoptium.net/)) e o Maven 3.8+ ([Download](https://maven.apache.org/download.cgi)) para conseguir rodar o programa
+
+```bash
+# 1. Entre na pasta do projeto
+cd endered-dashboard
+
+# 2. Instale as dependências e execute
+mvn spring-boot:run
+
+# 3. Abra no navegador
+# http://localhost:8080
+```
+Na página principal é possível visualizar o dashboard com as métricas e gráficos simulados.
+
+Para registrar uma nova solicitação de cartão digital, acesse:
+
+```bash
+http://localhost:8080/solicitar
+```
+Após preencher o formulário, a solicitação passa a ser considerada nas informações exibidas no dashboard.
+
+#### Páginas do protótipo 
+
+- */* — Dashboard com métricas, mapa de calor e gráficos
+- */solicitar* — Formulário de solicitação de cartão digital
+- */api/dashboard* — Endpoint JSON com todos os dados
+
+#### Exemplo — Solicitar Cartão (POST /api/cartoes)
+
+```json
+{
+  "nomeCompleto": "Maria Silva",
+  "email": "maria@email.com",
+  "telefone": "(11) 91234-5678",
+  "cidade": "São Paulo",
+  "tipoCartao": "CARTAO_BENEFICIOS"
+}
+```
+##### Tipos de Cartão
+    - CARTAO_BENEFICIOS
+    - CARTAO_PRESENTE
+    - CARTAO_FIDELIDADE
+    - CARTAO_CORPORATIVO
+    
 ---
 
-## 👥 Equipe
+## Entrega 1
 
-### 💼 Negócios
-- André (**afg@cesar.school**)
-- Danilo (**dmd@cesar.school**)
-- Júlia (**jmc3@cesar.school**)
+  #### Histórias do Usuário
+  
+  [link para o FigJam](https://www.figma.com/board/lZy6lebsYlZyLumOq8trZp/FigJam-Projetos-3?node-id=267-34&p=f&t=jocHJL0BniD9Rgao-0)
+  
+  #### Protótipo Lo-Fi
+  [link para o Figma](https://www.figma.com/proto/fqkOwTo6V06bIYWxXAWMGQ/Sem-t%C3%ADtulo?node-id=1-2&t=qqkqD9rIfS0p9XTp-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2)
+  
+  #### Screencast
+  [link para o Screencast](https://youtu.be/W4GPjuBF4Xc)
 
-### 💻 Tech
-- Caio (**cme@cesar.school**)
-- Kaiki (**knsg@cesar.school**)
-- Xulio (**jssn@cesar.school**)
-
-### 📈 Gestão
-- Venâncio (**avvn@cesar.school**)
-- Victor (**vlns@cesar.school**)
-
-
-*Endered — Tecnologia a favor do planeta.* 🌱
+---
