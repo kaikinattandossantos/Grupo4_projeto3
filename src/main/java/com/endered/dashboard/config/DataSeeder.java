@@ -92,15 +92,15 @@ public class DataSeeder implements CommandLineRunner {
                               String cidade, String estado, double lat, double lon,
                               DigitalCard.TipoCartao tipo) {
         return DigitalCard.builder()
-                .nomeCompleto(nome)
-                .email(email)
-                .cpfCnpj(cpf)
-                .telefone(tel)
-                .cidade(cidade)
-                .estado(estado)
-                .latitude(lat)
-                .longitude(lon)
-                .tipoCartao(tipo)
-                .build();
+            .nome(nome)
+            .email(email)
+            .cpf(cpf)
+            .telefone(tel)
+            .cidade(cidade)
+            .estado(estado)
+            .latitude(lat)
+            .longitude(lon)
+            .tipoCartao(tipo)
+            .build();
     }
 }

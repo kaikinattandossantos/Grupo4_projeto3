@@ -1,14 +1,14 @@
 package com.endered.dashboard.controller;
 
-import com.endered.dashboard.model.DigitalCard;
+import com.endered.dashboard.dto.cartao.CartaoRequestDTO;
+import com.endered.dashboard.dto.cartao.CartaoResponseDTO;
+import com.endered.dashboard.service.CartaoService;
 import com.endered.dashboard.service.DashboardService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -16,42 +16,39 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class DashboardController {
 
-    private final DashboardService service;
+    private final DashboardService dashboardService;
+    private final CartaoService cartaoService;
+
+    // DASHBOARD
 
     @GetMapping("/dashboard")
-    public ResponseEntity<Map<String, Object>> getDashboardData() {
-        return ResponseEntity.ok(service.getDashboardData());
+    public ResponseEntity<?> getDashboardData() {
+        return ResponseEntity.ok(dashboardService.getDashboardData());
     }
 
     @GetMapping("/impacto")
     public ResponseEntity<?> getImpactoAmbiental() {
-        return ResponseEntity.ok(service.calcularImpactoAmbiental());
+        return ResponseEntity.ok(dashboardService.calcularImpactoAmbiental());
     }
 
     @GetMapping("/heatmap")
     public ResponseEntity<?> getHeatMap() {
-        return ResponseEntity.ok(service.gerarHeatMap());
+        return ResponseEntity.ok(dashboardService.gerarHeatMap());
     }
+
+    // CARTÕES
 
     @GetMapping("/cartoes")
     public ResponseEntity<?> listarCartoes() {
-        return ResponseEntity.ok(service.listarTodos());
+        return ResponseEntity.ok(cartaoService.listarTodos());
     }
 
     @PostMapping("/cartoes")
-    public ResponseEntity<?> solicitarCartao(@Valid @RequestBody DigitalCard card) {
-        try {
-            DigitalCard saved = service.solicitarCartaoDigital(card);
-            Map<String, Object> response = new HashMap<>();
-            response.put("sucesso", true);
-            response.put("mensagem", "🎉 Seu cartão digital foi criado com sucesso! Bem-vindo à era verde!");
-            response.put("cartao", saved);
-            return ResponseEntity.ok(response);
-        } catch (IllegalArgumentException e) {
-            Map<String, Object> error = new HashMap<>();
-            error.put("sucesso", false);
-            error.put("mensagem", e.getMessage());
-            return ResponseEntity.badRequest().body(error);
-        }
+    public ResponseEntity<?> solicitarCartao(
+            @Valid @RequestBody CartaoRequestDTO dto) {
+
+        CartaoResponseDTO response = cartaoService.solicitarCartao(dto);
+
+        return ResponseEntity.ok(response);
     }
 }

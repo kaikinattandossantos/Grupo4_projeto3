@@ -2,10 +2,7 @@ package com.endered.dashboard.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -22,18 +19,18 @@ public class DigitalCard {
     private Long id;
 
     @NotBlank(message = "Nome é obrigatório")
-    @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
+    @Size(min = 2, max = 100)
     @Column(nullable = false)
-    private String nomeCompleto;
+    private String nome;
 
     @NotBlank(message = "Email é obrigatório")
     @Email(message = "Email inválido")
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "CPF/CNPJ é obrigatório")
+    @NotBlank(message = "CPF é obrigatório")
     @Column(nullable = false)
-    private String cpfCnpj;
+    private String cpf;
 
     @NotBlank(message = "Telefone é obrigatório")
     @Column(nullable = false)
