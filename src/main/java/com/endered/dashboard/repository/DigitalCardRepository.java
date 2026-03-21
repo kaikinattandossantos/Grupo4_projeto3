@@ -14,17 +14,21 @@ public interface DigitalCardRepository extends JpaRepository<DigitalCard, Long> 
 
     boolean existsByEmail(String email);
 
-    @Query("SELECT d.cidade, d.estado, d.latitude, d.longitude, COUNT(d) as qty " +
-           "FROM DigitalCard d GROUP BY d.cidade, d.estado, d.latitude, d.longitude " +
-           "ORDER BY qty DESC")
+    @Query("SELECT d.cidade, d.estado, d.latitude, d.longitude, COUNT(d) " +
+           "FROM DigitalCard d " +
+           "GROUP BY d.cidade, d.estado, d.latitude, d.longitude " +
+           "ORDER BY COUNT(d) DESC")
     List<Object[]> findHeatMapData();
 
-    @Query("SELECT d.tipoCartao, COUNT(d) FROM DigitalCard d GROUP BY d.tipoCartao")
+    @Query("SELECT d.tipoCartao, COUNT(d) " +
+           "FROM DigitalCard d GROUP BY d.tipoCartao")
     List<Object[]> countByTipoCartao();
 
-    @Query("SELECT MONTH(d.dataSolicitacao), COUNT(d) FROM DigitalCard d " +
-           "WHERE YEAR(d.dataSolicitacao) = YEAR(CURRENT_DATE) " +
-           "GROUP BY MONTH(d.dataSolicitacao) ORDER BY MONTH(d.dataSolicitacao)")
+    @Query("SELECT FUNCTION('MONTH', d.dataSolicitacao), COUNT(d) " +
+           "FROM DigitalCard d " +
+           "WHERE FUNCTION('YEAR', d.dataSolicitacao) = FUNCTION('YEAR', CURRENT_DATE) " +
+           "GROUP BY FUNCTION('MONTH', d.dataSolicitacao) " +
+           "ORDER BY FUNCTION('MONTH', d.dataSolicitacao)")
     List<Object[]> countByMesAno();
 
     List<DigitalCard> findTop10ByOrderByDataSolicitacaoDesc();
