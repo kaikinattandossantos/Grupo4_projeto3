@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenPay Impact | Edenred</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <main class="calculator-card">
+            <header>
+                <img src="https://www.edenred.com.br/wp-content/themes/edenred/assets/img/logo-edenred.png" alt="Edenred" class="logo">
+                <h1>Eco Impact</h1>
+            </header>
+
+            <section class="input-section">
+                <div class="field">
+                    <label>Volume de Transações</label>
+                    <input type="number" id="transacoesInput" placeholder="Digite o total anual">
+                </div>
+                <button onclick="realizarAnalise()">Gerar Relatório</button>
+            </section>
+
+            <section id="resultsSection" class="results-hidden">
+                <div class="metrics">
+                    <div class="metric-box highlight">
+                        <span>CO₂ Evitado</span>
+                        <h2 id="co2EvitadoVal">0.00000</h2>
+                        <small>kg/ano</small>
+                    </div>
+                </div>
+
+                <div class="chart-box">
+                    <canvas id="impactChart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
