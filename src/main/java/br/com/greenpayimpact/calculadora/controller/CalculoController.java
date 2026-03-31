@@ -1,10 +1,15 @@
 package br.com.greenpayimpact.calculadora.controller;
 
 import br.com.greenpayimpact.calculadora.dto.CalculoRequest;
+import br.com.greenpayimpact.calculadora.model.Empresa;
+import br.com.greenpayimpact.calculadora.repository.EmpresaRepository;
 import br.com.greenpayimpact.calculadora.service.CalculoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -16,12 +21,32 @@ public class CalculoController {
     @Autowired
     private CalculoService calculoService;
 
+    @Autowired
+    private EmpresaRepository empresaRepository;
+
+
     /**
      * Endpoint oficial da Task: executa o cálculo via POST.
      * Baseado nos fatores: Físico (0,0005kg) e Digital (0,00002kg)
      */
     @PostMapping("/calcular-impacto")
-    public Map<String, BigDecimal> executarCalculo(@RequestBody CalculoRequest request) {
-        return calculoService.calcularImpacto(request.getTransacoes());
+    public ResponseEntity<?> executarCalculo(@RequestBody @Valid CalculoRequest request, BindingResult result) {
+        
+        if (result.hasErrors()) {
+            String mensagemErro = result.getAllErrors().get(0).getDefaultMessage();
+            return ResponseEntity.badRequest().body(Map.of("erro", mensagemErro));
+        }
+
+        Empresa empresa = new Empresa();
+        empresa.setRazaoSocial(request.getRazaoSocial());
+        empresa.setCnpj(request.getCnpj());
+        empresa.setEmail(request.getEmail());
+        empresa.setQtdTransacoesAnuais(request.getTransacoes());
+        
+        empresaRepository.save(empresa);
+        
+        Map<String, BigDecimal> calculo = calculoService.calcularImpacto(request.getTransacoes());        
+        return ResponseEntity.ok(calculo);
     }
+
 }

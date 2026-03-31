@@ -1,7 +1,6 @@
 package br.com.greenpayimpact.calculadora.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -15,15 +14,17 @@ public class Empresa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Razão social é obrigatória")
     @Column(nullable = false)
     private String razaoSocial;
 
-    @NotNull(message = "Quantidade de transações é obrigatória")
     @Column(nullable = false)
     private Long qtdTransacoesAnuais;
 
+    @Column(nullable = false, length = 14)
     private String cnpj;
+
+    @Column(nullable = false)
+    private String email;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
