@@ -26,7 +26,6 @@ public class CalculoController {
 
 
     /**
-     * Endpoint oficial da Task: executa o cálculo via POST.
      * Baseado nos fatores: Físico (0,0005kg) e Digital (0,00002kg)
      */
     @PostMapping("/calcular-impacto")
