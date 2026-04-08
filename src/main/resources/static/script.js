@@ -7,7 +7,7 @@ async function realizarAnalise() {
     const volume = document.getElementById('transacoesInput').value;
 
     if (cnpj.length !== 14) {
-        alert("O CNPJ precisa ter exatamente 14 números!");
+        alert("O CNPJ precisa de ter exatamente 14 números!");
         return;
     }
 
@@ -19,25 +19,38 @@ async function realizarAnalise() {
     };
 
     try {
-        const response = await fetch('http://localhost:8081/api/calcular-impacto', {
+        const responseCadastro = await fetch('http://localhost:8081/api/empresas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
 
-        if (response.ok) {
-            const data = await response.json();
-            exibirResultados(data);
-            document.getElementById('msgErro').style.display = "none"; 
+        if (responseCadastro.ok) {
+            const empresaSalva = await responseCadastro.json();
+            const idGerado = empresaSalva.id;
+
+            const responseCalculo = await fetch(`http://localhost:8081/api/calcular-impacto/${idGerado}`);
+
+            if (responseCalculo.ok) {
+                const dataCalculo = await responseCalculo.json();
+                exibirResultados(dataCalculo);
+                document.getElementById('msgErro').style.display = "none";
+            } else {
+                exibirErro("Erro ao realizar o cálculo para esta empresa.");
+            }
         } else {
-            const erroBackend = await response.json();
-            const display = document.getElementById('msgErro');
-            display.innerText = "⚠️ " + erroBackend.erro; 
-            display.style.display = "block";
+            const erroBackend = await responseCadastro.json();
+            exibirErro(erroBackend.erro || "Erro ao cadastrar empresa.");
         }
     } catch (err) {
-        alert("Servidor Offline!");
+        alert("Servidor Offline ou Erro de Rede!");
     }
+}
+
+function exibirErro(mensagem) {
+    const display = document.getElementById('msgErro');
+    display.innerText = "⚠️ " + mensagem;
+    display.style.display = "block";
 }
 
 function exibirResultados(data) {
