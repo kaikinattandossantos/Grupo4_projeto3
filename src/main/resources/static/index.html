@@ -11,41 +11,58 @@
     <div class="container">
         <main class="calculator-card">
             <header>
+                <div class="logo-placeholder">EDENRED</div>
                 <h1>GreenPay Impact</h1>
             </header>
-
 
             <section class="input-section">
                 <div class="field">
                     <label>Razão Social</label>
-                    <input type="text" id="razaoSocialInput" required>
+                    <input type="text" id="razaoSocialInput" placeholder="Ex: Empresa Exemplo LTDA" required>
                 </div>
 
                 <div class="field">
                     <label>CNPJ (apenas números)</label>
-                    <input type="text" id="cnpjInput" maxlength="14" required>
+                    <input type="text" id="cnpjInput" maxlength="14" placeholder="00000000000000" required>
                 </div>
 
                 <div class="field">
                     <label>E-mail de Contato</label>
-                    <input type="email" id="emailInput" required>
+                    <input type="email" id="emailInput" placeholder="contato@empresa.com" required>
                 </div>
 
                 <div class="field">
-                    <label>Volume de Transações</label>
-                    <input type="number" id="transacoesInput" min="1" required>
+                    <label>Volume de Transações Anuais</label>
+                    <input type="number" id="transacoesInput" min="1" placeholder="Ex: 500000" required>
                 </div>
 
-                <button onclick="realizarAnalise()">Gerar Cálculo</button>
+                <button onclick="realizarAnalise()">Gerar Relatório de Impacto</button>
                 <p id="msgErro" style="color: #ff4444; font-size: 0.8rem; margin-top: 10px; display: none;"></p>
             </section>
 
             <section id="resultsSection" class="results-hidden">
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 30px 0;">
+                
                 <div class="metrics">
                     <div class="metric-box highlight">
-                        <span>CO₂ Evitado</span>
-                        <h2 id="co2EvitadoVal">0.00000</h2>
-                        <small>kg/ano</small>
+                        <span>CO₂ Evitado Estimado</span>
+                        <h2 id="co2EvitadoVal">0.00</h2>
+                        <small>kg por ano</small>
+                    </div>
+                </div>
+
+                <div class="analogies-grid">
+                    <div class="analogy-item">
+                        <strong id="arvoresVal">0</strong>
+                        <small>Árvores</small>
+                    </div>
+                    <div class="analogy-item">
+                        <strong id="kmVal">0</strong>
+                        <small>Km rodados</small>
+                    </div>
+                    <div class="analogy-item">
+                        <strong id="garrafasVal">0</strong>
+                        <small>Garrafas PET</small>
                     </div>
                 </div>
 

@@ -142,3 +142,47 @@ button:hover {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+.analogies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.analogy-item {
+    background: #1a1a1a;
+    padding: 15px 10px;
+    border-radius: 12px;
+    text-align: center;
+    border-bottom: 2px solid var(--accent-green);
+    transition: transform 0.3s ease;
+}
+
+.analogy-item:hover {
+    transform: translateY(-5px);
+}
+
+.analogy-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.analogy-item strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--text-main);
+}
+
+.analogy-item small {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+@media (max-width: 400px) {
+    .analogies-grid {
+        grid-template-columns: 1fr;
+    }
+}
