@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GreenPay Impact | Edenred</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>    
 </head>
 <body>
     <div class="container">
@@ -32,11 +35,11 @@
                 </div>
 
                 <div class="field">
-                    <label>Volume de Transações Anuais</label>
+                    <label>Volume de Transações Anuais(Por KG)</label>
                     <input type="number" id="transacoesInput" min="1" placeholder="Ex: 500000" required>
                 </div>
 
-                <button onclick="realizarAnalise()">Gerar Relatório de Impacto</button>
+                <button onclick="realizarAnalise()">Gerar Cálculo de Impacto</button>
                 <p id="msgErro" style="color: #ff4444; font-size: 0.8rem; margin-top: 10px; display: none;"></p>
             </section>
 
@@ -52,17 +55,43 @@
                 </div>
 
                 <div class="analogies-grid">
-                    <div class="analogy-item">
-                        <strong id="arvoresVal">0</strong>
-                        <small>Árvores</small>
+                    <div class="analogy-card">
+                        <div class="icon-wrapper green-glow">
+                            <i class="fa-solid fa-tree"></i>
+                        </div>
+                        <div class="analogy-content">
+                            <div class="analogy-header">
+                                <strong id="arvoresVal" class="analogy-value">0</strong>
+                                <span class="analogy-title">Árvores Plantadas</span>
+                            </div>
+                            <p id="arvoresText" class="analogy-desc">O equivalente ao cultivo anual destas árvores, purificando a atmosfera.</p>
+                        </div>
                     </div>
-                    <div class="analogy-item">
-                        <strong id="kmVal">0</strong>
-                        <small>Km rodados</small>
+
+                    <div class="analogy-card">
+                        <div class="icon-wrapper blue-glow">
+                            <i class="fa-solid fa-car-side"></i>
+                        </div>
+                        <div class="analogy-content">
+                            <div class="analogy-header">
+                                <strong id="kmVal" class="analogy-value">0</strong>
+                                <span class="analogy-title">Quilômetros evitados</span>
+                            </div>
+                            <p id="kmText" class="analogy-desc">O planeta poupou a fumaça de um veículo a combustão por esses Km rodados.</p>
+                        </div>
                     </div>
-                    <div class="analogy-item">
-                        <strong id="garrafasVal">0</strong>
-                        <small>Garrafas PET</small>
+
+                    <div class="analogy-card">
+                        <div class="icon-wrapper teal-glow">
+                            <i class="fa-solid fa-bottle-water"></i>
+                        </div>
+                        <div class="analogy-content">
+                            <div class="analogy-header">
+                                <strong id="garrafasVal" class="analogy-value">0</strong>
+                                <span class="analogy-title">Garrafas PET a menos</span>
+                            </div>
+                            <p id="garrafasText" class="analogy-desc"> Impacto direto na despoluição de oceanos e desobstrução nos aterros sanitários.</p>
+                        </div>
                     </div>
                 </div>
 

@@ -1,10 +1,7 @@
 package br.com.greenpayimpact.calculadora.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
 public class CalculoRequest {
     
     @NotBlank(message = "Razão social é obrigatória")
@@ -21,4 +18,38 @@ public class CalculoRequest {
     @NotNull(message = "Volume de transações é obrigatório")
     @Min(value = 1, message = "O volume deve ser pelo menos 1")
     private Long transacoes;
+
+    public CalculoRequest() {}
+
+    public String getRazaoSocial() {
+        return razaoSocial;
+    }
+
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Long getTransacoes() {
+        return transacoes;
+    }
+
+    public void setTransacoes(Long transacoes) {
+        this.transacoes = transacoes;
+    }
 }
