@@ -45,6 +45,10 @@
             </section>
 
             <section id="resultsSection" class="results-hidden">
+                <div class="report-header">
+                    <p>Relatório de Impacto Ambiental gerado para:</p>
+                    <h2 id="nomeEmpresaRelatorio">---</h2>
+                </div>
                 <hr style="border: 0; border-top: 1px solid var(--border); margin: 30px 0;">
                 
                 <div class="metrics">
@@ -98,6 +102,11 @@
 
                 <div class="chart-box">
                     <canvas id="impactChart"></canvas>
+                </div>
+                <div class="export-container">
+                    <button onclick="gerarRelatorio()" class="btn-export">
+                        <i class="fa-solid fa-file-pdf"></i> Gerar Relatório Executivo (PDF)
+                    </button>
                 </div>
             </section>
         </main>

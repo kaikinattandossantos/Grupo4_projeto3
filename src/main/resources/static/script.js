@@ -35,7 +35,7 @@ async function realizarAnalise() {
 
             if (responseCalculo.ok) {
                 const dataCalculo = await responseCalculo.json();
-                exibirResultados(dataCalculo);
+                exibirResultados(dataCalculo, razao);
                 document.getElementById('msgErro').style.display = "none";
             } else {
                 exibirErro("Erro ao realizar o cálculo para esta empresa.");
@@ -55,7 +55,9 @@ function exibirErro(mensagem) {
     display.style.display = "block";
 }
 
-function exibirResultados(data) {
+function exibirResultados(data, nomeEmpresa) {
+    document.getElementById('nomeEmpresaRelatorio').innerText = nomeEmpresa || "Empresa Não Identificada";
+    
     const section = document.getElementById('resultsSection');
     section.classList.replace('results-hidden', 'results-visible');
     
@@ -100,6 +102,7 @@ function atualizarGrafico(fisico, digital) {
             }]
         },
         options: {
+            devicePixelRatio: 3,
             responsive: true,
             maintainAspectRatio: false,
             layout: {
@@ -195,12 +198,13 @@ async function carregarHistorico() {
 
         empresas.forEach(emp => {
             const dataFormatada = new Date(emp.criadoEm).toLocaleDateString('pt-BR');
+            const nomeCodificado = encodeURIComponent(emp.razaoSocial);
             corpo.innerHTML += `
                 <tr>
                     <td>${emp.razaoSocial}</td>
                     <td>${emp.cnpj}</td>
                     <td>${dataFormatada}</td>
-                    <td><button class="btn-view" onclick="revisualizar(${emp.id})">VER</button></td>
+                    <td><button class="btn-view" onclick="revisualizar(${emp.id}, '${nomeCodificado}')">VER</button></td>
                 </tr>
             `;
         });
@@ -209,17 +213,21 @@ async function carregarHistorico() {
     }
 }
 
-async function revisualizar(id) {
+async function revisualizar(id, nomeCodificado) {
     try {
         const res = await fetch(`http://localhost:8081/api/calcular-impacto/${id}`);
         if (!res.ok) throw new Error("Falha na simulação");
         const data = await res.json();
         
         fecharModalHistorico();
-        exibirResultados(data);
+        exibirResultados(data, decodeURIComponent(nomeCodificado));
         
         document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
     } catch (err) {
         alert("Erro ao recuperar os dados dessa simulação.");
     }
+}
+
+function gerarRelatorio() {
+    window.print();
 }
