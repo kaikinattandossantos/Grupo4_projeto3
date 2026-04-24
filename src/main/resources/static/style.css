@@ -236,3 +236,119 @@ button:hover {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* ESTILOS DA MODAL E HISTÓRICO */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+.modal-content { background: #111; margin: 10% auto; padding: 30px; border: 1px solid #333; width: 90%; max-width: 600px; border-radius: 16px; animation: fadeIn 0.3s ease; }
+.modal-title { color: #fff; margin-bottom: 20px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+.close { color: #888; float: right; font-size: 28px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+.close:hover { color: var(--primary-red); }
+
+.table-container { max-height: 400px; overflow-y: auto; margin-top: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th { text-align: left; padding: 12px; color: #666; border-bottom: 1px solid #222; text-transform: uppercase; font-size: 0.7rem; position: sticky; top: 0; background: #111; }
+td { padding: 12px; color: #ccc; border-bottom: 1px solid #1a1a1a; }
+
+.btn-view { background: rgba(40, 167, 69, 0.1); color: #28a745; border: 1px solid rgba(40, 167, 69, 0.3); padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; transition: 0.2s; }
+.btn-view:hover { background: #28a745; color: #fff; }
+
+.btn-secondary { background: transparent; color: var(--text-muted); border: 1px solid var(--border); margin-top: 10px; width: 100%; }
+.btn-secondary:hover { background: #1a1a1a; color: white; border-color: #444; }
+
+/* --- ESTILO DO BOTÃO DE EXPORTAR --- */
+.export-container {
+    text-align: center;
+    margin-top: 40px;
+    padding-bottom: 20px;
+}
+
+.btn-export {
+    background: #ffffff;
+    color: var(--bg-dark);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.btn-export:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+}
+/* --- CABEÇALHO DO RELATÓRIO --- */
+.report-header {
+    text-align: center;
+    margin-top: 10px;
+}
+.report-header p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.report-header h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-top: 5px;
+}
+
+/* --- MÁGICA DA IMPRESSÃO PARA PDF --- */
+@media print {
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .input-section, .export-container, header, #modalHistorico {
+        display: none !important;
+    }
+
+    html, body, .container {
+        display: block !important;
+        height: auto !important;
+        min-height: 0 !important;
+        background-color: var(--bg-dark) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .calculator-card {
+        display: block !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 10px 20px !important;
+    }
+
+    .metrics {
+        display: block !important;
+    }
+    
+    .metric-box {
+        display: block !important;
+        height: auto !important;
+        padding: 20px !important;
+        margin-bottom: 20px !important;
+        page-break-inside: avoid;
+    }
+
+    .analogy-card {
+        page-break-inside: avoid;
+    }
+
+    .chart-box {
+        page-break-inside: avoid;
+        margin: 30px auto 0 auto !important;
+        width: 80% !important; 
+        max-width: 500px !important; 
+        height: 250px !important;
+        display: block !important;
+    }
+}
