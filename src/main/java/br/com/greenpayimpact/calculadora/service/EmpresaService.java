@@ -6,6 +6,8 @@ import br.com.greenpayimpact.calculadora.model.Empresa;
 import br.com.greenpayimpact.calculadora.repository.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
+import java.util.List;
 
 @Service
 public class EmpresaService {
@@ -35,5 +37,9 @@ public class EmpresaService {
         }
         
         return calculoService.calcularImpacto(empresa.getQtdTransacoesAnuais());
+    }
+    public List<Empresa> listarTodas() {
+        // Retorna todas as empresas ordenadas da mais nova para a mais velha
+        return empresaRepository.findAll(Sort.by(Sort.Direction.DESC, "criadoEm"));
     }
 }

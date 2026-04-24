@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "*")
@@ -39,5 +39,9 @@ public class CalculoController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("erro", e.getMessage()));
         }
+    }
+    @GetMapping("/empresas")
+    public ResponseEntity<List<Empresa>> listarEmpresas() {
+        return ResponseEntity.ok(empresaService.listarTodas());
     }
 }

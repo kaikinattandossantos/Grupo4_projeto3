@@ -160,3 +160,66 @@ function atualizarGrafico(fisico, digital) {
         }
     });
 }
+
+function abrirModalHistorico() {
+    document.getElementById('modalHistorico').style.display = "block";
+    carregarHistorico();
+}
+
+function fecharModalHistorico() {
+    document.getElementById('modalHistorico').style.display = "none";
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('modalHistorico');
+    if (event.target === modal) {
+        fecharModalHistorico();
+    }
+}
+
+async function carregarHistorico() {
+    const corpo = document.getElementById('corpoHistorico');
+    corpo.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #888;">Carregando histórico...</td></tr>';
+
+    try {
+        const res = await fetch('http://localhost:8081/api/empresas');
+        if (!res.ok) throw new Error("Falha na API");
+        const empresas = await res.json();
+        
+        corpo.innerHTML = '';
+        
+        if (empresas.length === 0) {
+            corpo.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #888;">Nenhuma análise realizada ainda.</td></tr>';
+            return;
+        }
+
+        empresas.forEach(emp => {
+            const dataFormatada = new Date(emp.criadoEm).toLocaleDateString('pt-BR');
+            corpo.innerHTML += `
+                <tr>
+                    <td>${emp.razaoSocial}</td>
+                    <td>${emp.cnpj}</td>
+                    <td>${dataFormatada}</td>
+                    <td><button class="btn-view" onclick="revisualizar(${emp.id})">VER</button></td>
+                </tr>
+            `;
+        });
+    } catch (err) {
+        corpo.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #ff4444;">Erro ao carregar histórico.</td></tr>';
+    }
+}
+
+async function revisualizar(id) {
+    try {
+        const res = await fetch(`http://localhost:8081/api/calcular-impacto/${id}`);
+        if (!res.ok) throw new Error("Falha na simulação");
+        const data = await res.json();
+        
+        fecharModalHistorico();
+        exibirResultados(data);
+        
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    } catch (err) {
+        alert("Erro ao recuperar os dados dessa simulação.");
+    }
+}

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>    
 </head>
 <body>
@@ -35,12 +34,14 @@
                 </div>
 
                 <div class="field">
-                    <label>Volume de Transações Anuais(Por KG)</label>
+                    <label>Volume de Transações Anuais (Por KG)</label>
                     <input type="number" id="transacoesInput" min="1" placeholder="Ex: 500000" required>
                 </div>
 
                 <button onclick="realizarAnalise()">Gerar Cálculo de Impacto</button>
                 <p id="msgErro" style="color: #ff4444; font-size: 0.8rem; margin-top: 10px; display: none;"></p>
+                
+                <button onclick="abrirModalHistorico()" class="btn-secondary">Ver Histórico de Análises</button>
             </section>
 
             <section id="resultsSection" class="results-hidden">
@@ -90,7 +91,7 @@
                                 <strong id="garrafasVal" class="analogy-value">0</strong>
                                 <span class="analogy-title">Garrafas PET a menos</span>
                             </div>
-                            <p id="garrafasText" class="analogy-desc"> Impacto direto na despoluição de oceanos e desobstrução nos aterros sanitários.</p>
+                            <p id="garrafasText" class="analogy-desc">Impacto direto na despoluição de oceanos e desobstrução nos aterros sanitários.</p>
                         </div>
                     </div>
                 </div>
@@ -101,6 +102,28 @@
             </section>
         </main>
     </div>
+
+    <div id="modalHistorico" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalHistorico()">&times;</span>
+            <h2 class="modal-title">Histórico de Impacto</h2>
+            <div class="table-container">
+                <table id="tabelaHistorico">
+                    <thead>
+                        <tr>
+                            <th>Empresa</th>
+                            <th>CNPJ</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoHistorico">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
