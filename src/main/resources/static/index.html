@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </head>
 <body>
     <div class="container">
@@ -16,34 +16,32 @@
                 <div class="logo-placeholder">EDENRED</div>
                 <h1>GreenPay Impact</h1>
             </header>
-
             <section class="input-section">
                 <div class="field">
                     <label>Razão Social</label>
                     <input type="text" id="razaoSocialInput" placeholder="Ex: Empresa Exemplo LTDA" required>
                 </div>
-
                 <div class="field">
                     <label>CNPJ (apenas números)</label>
                     <input type="text" id="cnpjInput" maxlength="14" placeholder="00000000000000" required>
                 </div>
-
                 <div class="field">
                     <label>E-mail de Contato</label>
                     <input type="email" id="emailInput" placeholder="contato@empresa.com" required>
                 </div>
-
                 <div class="field">
                     <label>Volume de Transações Anuais (Por KG)</label>
                     <input type="number" id="transacoesInput" min="1" placeholder="Ex: 500000" required>
                 </div>
-
+                
                 <button onclick="realizarAnalise()">Gerar Cálculo de Impacto</button>
                 <p id="msgErro" style="color: #ff4444; font-size: 0.8rem; margin-top: 10px; display: none;"></p>
                 
                 <button onclick="abrirModalHistorico()" class="btn-secondary">Ver Histórico de Análises</button>
+                <!-- Novo Botão Admin adicionado -->
+                <button onclick="abrirModalAdmin()" class="btn-secondary" style="border-color: #ffc107; color: #ffc107; margin-top: 10px;"> Admin: Gerenciar Fatores</button>
             </section>
-
+            
             <section id="resultsSection" class="results-hidden">
                 <div class="report-header">
                     <p>Relatório de Impacto Ambiental gerado para:</p>
@@ -58,7 +56,7 @@
                         <small>kg por ano</small>
                     </div>
                 </div>
-
+                
                 <div class="analogies-grid">
                     <div class="analogy-card">
                         <div class="icon-wrapper green-glow">
@@ -72,7 +70,6 @@
                             <p id="arvoresText" class="analogy-desc">O equivalente ao cultivo anual destas árvores, purificando a atmosfera.</p>
                         </div>
                     </div>
-
                     <div class="analogy-card">
                         <div class="icon-wrapper blue-glow">
                             <i class="fa-solid fa-car-side"></i>
@@ -85,7 +82,6 @@
                             <p id="kmText" class="analogy-desc">O planeta poupou a fumaça de um veículo a combustão por esses Km rodados.</p>
                         </div>
                     </div>
-
                     <div class="analogy-card">
                         <div class="icon-wrapper teal-glow">
                             <i class="fa-solid fa-bottle-water"></i>
@@ -99,10 +95,11 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="chart-box">
                     <canvas id="impactChart"></canvas>
                 </div>
+                
                 <div class="export-container">
                     <button onclick="gerarRelatorio()" class="btn-export">
                         <i class="fa-solid fa-file-pdf"></i> Gerar Relatório Executivo (PDF)
@@ -112,6 +109,7 @@
         </main>
     </div>
 
+    <!-- Modal Histórico Existente -->
     <div id="modalHistorico" class="modal">
         <div class="modal-content">
             <span class="close" onclick="fecharModalHistorico()">&times;</span>
@@ -127,7 +125,56 @@
                         </tr>
                     </thead>
                     <tbody id="corpoHistorico">
-                        </tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nova Modal do Administrador -->
+    <div id="modalAdmin" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <span class="close" onclick="fecharModalAdmin()">&times;</span>
+            <h2 class="modal-title" style="color: #ffc107;">Painel Admin - Fatores de Emissão</h2>
+            
+            <!-- Formulário para inserir novo fator -->
+            <div style="background: #1a1a1a; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <h3 style="font-size: 1rem; margin-bottom: 15px;">Adicionar Novo Fator</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <div class="field" style="flex: 1; min-width: 150px;">
+                        <label>Tipo de Transação</label>
+                        <select id="fatorTipo" style="width: 100%; padding: 10px; border-radius: 5px; background: #111; color: white; border: 1px solid #333;">
+                            <option value="FISICA">FÍSICA</option>
+                            <option value="DIGITAL">DIGITAL</option>
+                        </select>
+                    </div>
+                    <div class="field" style="flex: 1; min-width: 150px;">
+                        <label>Valor (kg CO2e)</label>
+                        <input type="number" id="fatorValor" step="0.00001" placeholder="Ex: 0.0005" required>
+                    </div>
+                    <div class="field" style="flex: 2; min-width: 200px;">
+                        <label>Fonte / Metodologia</label>
+                        <input type="text" id="fatorFonte" placeholder="Ex: GHG Protocol 2024" required>
+                    </div>
+                </div>
+                <button onclick="salvarNovoFator()" style="background: #ffc107; color: #000; margin-top: 15px; width: 100%;">Salvar Nova Versão</button>
+            </div>
+
+            <!-- Tabela de Histórico de Fatores -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Fonte</th>
+                            <th>Data Vigência</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaFatores">
+                        
+                    </tbody>
                 </table>
             </div>
         </div>

@@ -26,6 +26,12 @@ public class Empresa {
     @Column(nullable = false, updatable = false)
     private LocalDateTime criadoEm;
 
+    @Column(name = "fator_fisico_id", nullable = false)
+    private Long fatorFisicoId;
+
+    @Column(name = "fator_digital_id", nullable = false)
+    private Long fatorDigitalId;
+
     public Empresa() {
         this.criadoEm = LocalDateTime.now();
     }
@@ -46,4 +52,10 @@ public class Empresa {
     public void setEmail(String email) { this.email = email; }
 
     public LocalDateTime getCriadoEm() { return criadoEm; }
+
+    public Long getFatorFisicoId() { return fatorFisicoId; }
+    public void setFatorFisicoId(Long fatorFisicoId) { this.fatorFisicoId = fatorFisicoId; }
+    
+    public Long getFatorDigitalId() { return fatorDigitalId; }
+    public void setFatorDigitalId(Long fatorDigitalId) { this.fatorDigitalId = fatorDigitalId; }
 }
