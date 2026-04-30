@@ -235,7 +235,6 @@ function gerarRelatorio() {
     window.print();
 }
 
-// --- FUNÇÕES DO PAINEL ADMIN (HISTÓRIA 7) ---
 
 function abrirModalAdmin() {
     document.getElementById('modalAdmin').style.display = "block";

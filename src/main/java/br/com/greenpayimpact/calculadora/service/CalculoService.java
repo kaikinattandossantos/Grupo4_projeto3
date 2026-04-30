@@ -24,11 +24,9 @@ public class CalculoService {
     public CalculoResponse calcularImpacto(Long transacoes) {
         BigDecimal qtd = BigDecimal.valueOf(transacoes);
 
-        // 1. Busca os fatores DINÂMICOS do banco de dados
         BigDecimal fatorFisico = buscarFatorAtivo(TipoTransacao.FISICA);
         BigDecimal fatorDigital = buscarFatorAtivo(TipoTransacao.DIGITAL);
 
-        // 2. Realiza o cálculo com os valores atualizados
         BigDecimal impactoFisico = qtd.multiply(fatorFisico);
         BigDecimal impactoDigital = qtd.multiply(fatorDigital);
         BigDecimal co2Evitado = impactoFisico.subtract(impactoDigital);
@@ -43,7 +41,6 @@ public class CalculoService {
         );
     }
 
-    // Método auxiliar para buscar o fator e garantir que o Admin cadastrou os dados
     private BigDecimal buscarFatorAtivo(TipoTransacao tipo) {
         return fatorRepository.findByTipoAndAtivoTrue(tipo)
                 .map(FatorEmissao::getValor)

@@ -18,11 +18,10 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         
-        // 1. Verifica se já existe um fator FÍSICO ativo no banco
         if (repository.findByTipoAndAtivoTrue(TipoTransacao.FISICA).isEmpty()) {
             FatorEmissao fatorFisico = new FatorEmissao();
             fatorFisico.setTipo(TipoTransacao.FISICA);
-            fatorFisico.setValor(new BigDecimal("0.0005")); // O valor padrão da pesquisa
+            fatorFisico.setValor(new BigDecimal("0.0005")); 
             fatorFisico.setFonteMetodologia("Padrão Inicial (Pesquisa da Equipe)");
             fatorFisico.setAtivo(true);
             
@@ -30,11 +29,10 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("✅ Fator de Emissão FÍSICA padrão inicializado no banco.");
         }
 
-        // 2. Verifica se já existe um fator DIGITAL ativo no banco
         if (repository.findByTipoAndAtivoTrue(TipoTransacao.DIGITAL).isEmpty()) {
             FatorEmissao fatorDigital = new FatorEmissao();
             fatorDigital.setTipo(TipoTransacao.DIGITAL);
-            fatorDigital.setValor(new BigDecimal("0.00002")); // O valor padrão da pesquisa
+            fatorDigital.setValor(new BigDecimal("0.00002"));
             fatorDigital.setFonteMetodologia("Padrão Inicial (Pesquisa da Equipe)");
             fatorDigital.setAtivo(true);
             
