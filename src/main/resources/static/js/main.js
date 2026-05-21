@@ -1,8 +1,7 @@
 import { cadastrarEmpresa, buscarImpacto } from './api.js';
-import { exibirResultados, exibirErro, ocultarErro } from './ui.js';
+import { exibirResultados, exibirErro, ocultarErro, baixarRelatorioCSV } from './ui.js';
 import { abrirModalHistorico, fecharModalHistorico, filtrarHistorico } from './history.js';
 import { abrirModalAdmin, fecharModalAdmin, salvarNovoFator } from './admin.js';
-
 
 async function realizarAnalise() {
     const nome = document.getElementById('razaoSocialInput').value.trim();
@@ -33,7 +32,9 @@ async function realizarAnalise() {
     try {
         const dadosProcessados = await cadastrarEmpresa(payload);
         const dataCalculo = await buscarImpacto(dadosProcessados.id);
-        exibirResultados(dataCalculo, nome, dadosProcessados.anonimo);
+        
+        exibirResultados(dataCalculo, nome, dadosProcessados.anonimo, payload); 
+        
     } catch (err) {
         exibirErro(err.message || "Servidor Offline ou Erro de Rede!");
     }
@@ -82,6 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnExportar = document.getElementById('btnExportar');
     if (btnExportar) {
         btnExportar.addEventListener('click', gerarRelatorio);
+    }
+
+    const btnExportarCSV = document.getElementById('btnExportarCSV');
+    if (btnExportarCSV) {
+        btnExportarCSV.addEventListener('click', baixarRelatorioCSV);
     }
 
     window.addEventListener('click', (event) => {
