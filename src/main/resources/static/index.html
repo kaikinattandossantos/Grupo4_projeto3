@@ -7,12 +7,14 @@
     <meta name="author" content="Edenred">
     <title>GreenPay Impact | Edenred</title>
     
+    <!-- Design System Modular CSS -->
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/modals.css">
     
+    <!-- Icons & Core Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
@@ -20,11 +22,13 @@
 <body>
     <div class="container">
         <main class="calculator-card">
+            <!-- Header Branding Section -->
             <header>
                 <div class="logo-placeholder">EDENRED</div>
                 <h1>GreenPay Impact</h1>
             </header>
             
+            <!-- Simulation Inputs Section -->
             <section class="input-section">
                 <div class="field">
                     <label for="razaoSocialInput">Nome Fantasia / Razão Social <small>(Opcional)</small></label>
@@ -50,6 +54,7 @@
                 <button type="button" id="btnAbrirAdmin" class="btn-secondary" style="border-color: #ffc107; color: #d39e00; margin-top: 10px;">Painel Admin: Gerenciar Fatores</button>
             </section>
             
+            <!-- Interactive Results Dashboard (Initially Hidden) -->
             <section id="resultsSection" class="results-hidden">
                 <div class="report-header">
                     <p>Relatório de Impacto Ambiental gerado para:</p>
@@ -118,16 +123,14 @@
         </main>
     </div>
 
+    <!-- Modal: Simulation History -->
     <div id="modalHistorico" class="modal" role="dialog" aria-modal="true" aria-labelledby="historicoTitle">
         <div class="modal-content">
             <span class="close" id="closeHistorico" role="button" aria-label="Fechar">&times;</span>
             <h2 id="historicoTitle" class="modal-title">Histórico de Impacto</h2>
             
-            <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
-                <input type="text" id="buscaHistoricoInput" placeholder="Buscar por Nome ou CNPJ..." style="flex: 1; margin-bottom: 0;">
-                <button type="button" id="btnExportarCsv" class="btn-secondary" style="margin-top: 0; white-space: nowrap;">
-                    📊 Exportar CSV
-                </button>
+            <div style="margin-bottom: 15px;">
+                <input type="text" id="buscaHistoricoInput" placeholder="Buscar por Nome ou CNPJ...">
             </div>
 
             <div class="table-container">
@@ -141,17 +144,20 @@
                         </tr>
                     </thead>
                     <tbody id="corpoHistorico">
-                        </tbody>
+                        <!-- Dynamically Filled -->
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 
+    <!-- Modal: Administrative Emission Factors -->
     <div id="modalAdmin" class="modal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
         <div class="modal-content" style="max-width: 700px;">
             <span class="close" id="closeAdmin" role="button" aria-label="Fechar">&times;</span>
             <h2 id="adminTitle" class="modal-title" style="color: var(--primary-red);">Painel Admin - Fatores de Emissão</h2>
             
+            <!-- Insert New Factor Form -->
             <div class="admin-form-container">
                 <h3>Adicionar Novo Fator</h3>
                 <div class="admin-grid">
@@ -174,6 +180,7 @@
                 <button type="button" id="btnSalvarFator">Salvar Nova Versão</button>
             </div>
 
+            <!-- Historical Emission Factors Table -->
             <div class="table-container">
                 <table>
                     <thead>
@@ -186,12 +193,14 @@
                         </tr>
                     </thead>
                     <tbody id="corpoTabelaFatores">
-                        </tbody>
+                        <!-- Dynamically Filled -->
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 
+    <!-- Core Modular Logic Orchestrator -->
     <script type="module" src="js/main.js"></script>
 </body>
 </html>

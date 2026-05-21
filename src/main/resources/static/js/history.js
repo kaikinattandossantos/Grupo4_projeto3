@@ -1,4 +1,4 @@
-import { obterHistoricoEmpresas, buscarImpacto, baixarRelatorioCsv } from './api.js';
+import { obterHistoricoEmpresas, buscarImpacto } from './api.js';
 import { exibirResultados } from './ui.js';
 
 export function abrirModalHistorico() {
@@ -11,8 +11,6 @@ export function abrirModalHistorico() {
         campoBusca.value = '';
     }
     carregarHistorico();
-    
-    configurarBotaoExportacao();
 }
 
 export function fecharModalHistorico() {
@@ -102,41 +100,4 @@ async function revisualizar(idResultado, nomeEmpresa) {
     } catch (err) {
         alert("Erro ao recuperar os dados dessa simulação congelada.");
     }
-}
-
-
-function configurarBotaoExportacao() {
-    const btnExportar = document.getElementById('btnExportarCsv');
-    if (!btnExportar) return;
-
-    const novoBtn = btnExportar.cloneNode(true);
-    btnExportar.parentNode.replaceChild(novoBtn, btnExportar);
-
-    novoBtn.addEventListener('click', async () => {
-        try {
-            novoBtn.disabled = true;
-            novoBtn.innerText = '⏳ Gerando CSV...';
-
-            const blob = await baixarRelatorioCsv();
-
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'relatorio_esg_greenpay.csv';
-            
-            document.body.appendChild(a);
-            a.click();
-            
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-
-        } catch (err) {
-            console.error(err);
-            alert("Erro ao exportar o histórico corporativo em CSV.");
-        } finally {
-            novoBtn.disabled = false;
-            novoBtn.innerText = '📊 Exportar Histórico (CSV)';
-        }
-    });
 }

@@ -15,7 +15,6 @@ import br.com.greenpayimpact.calculadora.model.ResultadoCalculo;
 import br.com.greenpayimpact.calculadora.repository.EmpresaRepository;
 import br.com.greenpayimpact.calculadora.repository.ResultadoCalculoRepository;
 
-
 @Service
 public class EmpresaService {
 
@@ -74,33 +73,4 @@ public class EmpresaService {
             return mapa;
         }).collect(Collectors.toList());
     }
-
-    public String exportarHistoricoParaCsv() {
-            List<ResultadoCalculo> resultados = resultadoRepository.findByEmpresaIsNotNullOrderByDataCalculoDesc();
-            
-            StringBuilder csv = new StringBuilder();
-            csv.append('\ufeff'); 
-            
-            csv.append("Nome da Empresa;CNPJ;Quantidade Transações;Impacto Físico (kgCO2e);Impacto Digital (kgCO2e);CO2 Evitado (kgCO2e);Árvores Equivalentes;KM Evitados;Garrafas PET Evitadas;Data Cálculo\n");
-            
-            for (ResultadoCalculo res : resultados) {
-                csv.append(String.format("%s;%s;%d;%s;%s;%s;%.2f;%.2f;%d;%s\n",
-                    res.getEmpresa().getNomeEmpresa().replace(";", ","),
-                    res.getEmpresa().getCnpj(),
-                    res.getQtdTransacoes(),
-                    res.getImpactoFisico().toString(),
-                    res.getImpactoDigital().toString(),
-                    res.getCo2Evitado().toString(),
-                    res.getArvoresEquivalentes(),
-                    res.getKmEvitados(),
-                    res.getGarrafasPetEvitadas(),
-                    res.getDataCalculo().toString()
-                ));
-            }
-            
-            return csv.toString();
-        }
-
-
-
 }

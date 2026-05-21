@@ -72,18 +72,3 @@ export async function obterFatores() {
     }
     return res.json();
 }
-
-
-/**
- * Faz a requisição do arquivo CSV gerado pelo backend.
- * @returns {Promise<Blob>} Conteúdo binário do arquivo gerado
- */
-export async function baixarRelatorioCsv() {
-    const res = await fetch(`${API_BASE_URL}/empresas/exportar-csv`, {
-        method: 'GET'
-    });
-    if (!res.ok) {
-        throw new Error("Falha ao exportar relatório CSV.");
-    }
-    return res.blob();
-}
