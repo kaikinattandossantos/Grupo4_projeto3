@@ -70,7 +70,7 @@ public class CalculoService {
     }
 
     public CalculoResponse mapearParaResponse(ResultadoCalculo resultado) {
-        return new CalculoResponse(
+        CalculoResponse response = new CalculoResponse(
                 resultado.getImpactoFisico(),
                 resultado.getImpactoDigital(),
                 resultado.getCo2Evitado(),
@@ -78,6 +78,24 @@ public class CalculoService {
                 resultado.getKmEvitados(),
                 resultado.getGarrafasPetEvitadas()
         );
+        
+        response.setId(resultado.getId());
+        response.setQtdTransacoes(resultado.getQtdTransacoes());
+        if (resultado.getFatorFisico() != null) {
+            response.setMetodologiaFisico(resultado.getFatorFisico().getFonteMetodologia());
+        }
+        if (resultado.getFatorDigital() != null) {
+            response.setMetodologiaDigital(resultado.getFatorDigital().getFonteMetodologia());
+        }
+        if (resultado.getEmpresa() != null) {
+            CalculoResponse.EmpresaResponse emp = new CalculoResponse.EmpresaResponse();
+            emp.setNomeEmpresa(resultado.getEmpresa().getNomeEmpresa());
+            emp.setCnpj(resultado.getEmpresa().getCnpj());
+            emp.setEmail(resultado.getEmpresa().getEmail());
+            response.setEmpresa(emp);
+        }
+
+        return response;
     }
 
     private BigDecimal buscarAnalogia(String nome, BigDecimal valorPadrao) {
