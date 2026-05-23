@@ -13,7 +13,6 @@ main {
     width: 100%;
 }
 
-/* Flexbox and Grid Layout Helpers */
 .d-flex {
     display: flex;
 }
@@ -30,7 +29,15 @@ main {
     gap: 20px;
 }
 
-/* Print Overrides Otimizados para Relatório Executivo (PDF) */
+.export-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; 
+    margin-top: 20px;
+    width: 100%;
+}
+
 @media print {
     * {
         -webkit-print-color-adjust: exact !important;
@@ -56,6 +63,7 @@ main {
     header,
     .btn-secondary,
     .modal,
+    #msgErro,
     hr {
         display: none !important;
     }
@@ -95,6 +103,7 @@ main {
     }
 
     .analogies-grid {
+        display: grid !important;
         grid-template-columns: 1fr 1fr !important;
         gap: 20px !important;
         margin-top: 30px !important;

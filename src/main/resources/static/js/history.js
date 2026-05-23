@@ -92,11 +92,19 @@ export async function carregarHistorico() {
     }
 }
 
-async function revisualizar(idResultado, nomeEmpresa) {
+async function revisualizar(idResultado, nomeEmpresa, cnpjEmpresa) {
     try {
         const data = await buscarImpacto(idResultado);
         fecharModalHistorico();
-        exibirResultados(data, nomeEmpresa, false);
+        
+        
+        const dadosDaTabela = {
+            cnpj: cnpjEmpresa,
+            email: "Buscado pelo Histórico", 
+            transacoes: "Simulação Passada" 
+        };
+
+        exibirResultados(data, nomeEmpresa, false, dadosDaTabela);
     } catch (err) {
         alert("Erro ao recuperar os dados dessa simulação congelada.");
     }

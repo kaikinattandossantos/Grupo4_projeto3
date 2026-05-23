@@ -45,9 +45,12 @@ public class EmpresaService {
             empresa = empresaRepository.save(empresa);
         }
 
-        ResultadoCalculo resultado = calculoService.calcularEPersistirImpacto(request.getTransacoes(), empresa);
+        ResultadoCalculo resultado = calculoService.calcularEPersistirImpacto(
+            request.getTransacoes(), 
+            request.getPercentualMigracao(), 
+            empresa
+        );
 
-        
         Map<String, Object> resposta = new HashMap<>();
         resposta.put("id", resultado.getId());
         resposta.put("empresaId", (empresa != null) ? empresa.getId() : null);

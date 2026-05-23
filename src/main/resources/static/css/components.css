@@ -14,12 +14,25 @@ header {
     margin-bottom: 35px;
 }
 
+.brand-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.brand-logo {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
 .logo-placeholder {
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: 3px;
     color: var(--primary-red);
-    margin-bottom: 8px;
     position: relative;
     display: inline-block;
 }
@@ -363,9 +376,13 @@ button:active {
 }
 
 .btn-export {
-    background: var(--primary-red);
-    color: var(--white);
-    box-shadow: 0 4px 15px rgba(226, 0, 26, 0.15);
+    width: 100% !important;
+    max-width: 320px !important; 
+    margin: 0 auto 15px auto !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .btn-export:hover {
@@ -390,4 +407,41 @@ button:active {
         opacity: 1;
         transform: translateY(0);
     }
+}
+.slider-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.migracao-slider {
+    flex: 1;
+    accent-color: var(--primary-red);
+}
+
+.input-with-symbol {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.migracao-input-number {
+    width: 80px;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+.symbol-percent {
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.cenario-simulado-text {
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 5px;
+    font-weight: bold;
 }
