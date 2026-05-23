@@ -33,6 +33,12 @@ export function exibirResultados(data, nomeEmpresa, isAnonimo) {
         tituloRelatorio.classList.remove('titulo-anonimo');
     }
 
+    const cenarioText = document.getElementById('cenarioSimuladoText');
+    if (cenarioText) {
+        const perc = data.percentualMigracao !== undefined && data.percentualMigracao !== null ? data.percentualMigracao : 100;
+        cenarioText.innerText = `Cenário Simulado: ${perc}% de migração para o digital`;
+    }
+
     const section = document.getElementById('resultsSection');
     if (section) {
         section.classList.remove('results-hidden');
@@ -54,7 +60,7 @@ export function exibirResultados(data, nomeEmpresa, isAnonimo) {
     const garrafasEl = document.getElementById('garrafasVal');
     if (garrafasEl) garrafasEl.innerText = Math.floor(data.garrafasPetEvitadas).toLocaleString('pt-BR');
 
-    atualizarGrafico(data.impactoFisico, data.impactoDigital);
+    atualizarGrafico(data.impactoFisico, data.impactoHibrido, data.impactoDigital);
 
     setTimeout(() => {
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -75,13 +81,13 @@ export async function baixarRelatorioCSV() {
         const emailTexto = (dbData.empresa && dbData.empresa.email) ? dbData.empresa.email : "Não informado";
         const volumeTexto = dbData.qtdTransacoes || "Não informado";
         const tipoSimulacao = dbData.empresa ? "Completa (Identificada)" : "Expressa (Anônima)";
+        const percentualMigracao = dbData.percentualMigracao !== null && dbData.percentualMigracao !== undefined ? dbData.percentualMigracao : "100";
 
         const co2 = document.getElementById('co2EvitadoVal').innerText.replace('.', ',');
         const arvores = document.getElementById('arvoresVal').innerText;
         const km = document.getElementById('kmVal').innerText;
         const garrafas = document.getElementById('garrafasVal').innerText;
 
-        // Metodologias resgatadas diretamente do JSON do backend que arrumamos
         const metodologiaFisico = dbData.metodologiaFisico || "Não especificada";
         const metodologiaDigital = dbData.metodologiaDigital || "Não especificada";
 
@@ -96,7 +102,8 @@ export async function baixarRelatorioCSV() {
         csv += `Razão Social:;${nomeEmpresa}\n`;
         csv += `CNPJ:;${cnpjTexto}\n`;
         csv += `E-mail Corporativo:;${emailTexto}\n`;
-        csv += `Volume de Transações Analisado:;${volumeTexto}\n\n`;
+        csv += `Volume de Transações Analisado:;${volumeTexto}\n`;
+        csv += `Percentual de Migração Simulado:;${percentualMigracao}%\n\n`;
 
         csv += "RESULTADOS DE IMPACTO (CO2 E EQUIVALÊNCIAS)\n";
         csv += "Métrica;Valor\n";

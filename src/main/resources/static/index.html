@@ -49,6 +49,17 @@
                     <label for="transacoesInput">Volume de Transações Anuais <span style="color: var(--primary-red);">*</span></label>
                     <input type="number" id="transacoesInput" min="1" placeholder="Ex: 500000" required>
                 </div>
+
+                <div class="field">
+                    <label for="migracaoInput">PERCENTUAL DE MIGRAÇÃO PARA O DIGITAL <span class="required">*</span></label>
+                    <div class="slider-group">
+                        <input type="range" id="migracaoSlider" class="migracao-slider" min="0" max="100" value="100">
+                        <div class="input-with-symbol">
+                            <input type="number" id="migracaoInput" class="migracao-input-number" min="0" max="100" value="100">
+                            <span class="symbol-percent">%</span>
+                        </div>
+                    </div>
+                </div>
                 
                 <button type="button" id="btnCalcular">Gerar Cálculo de Impacto</button>
                 <p id="msgErro" style="color: var(--danger); font-size: 0.85rem; font-weight: 600; margin-top: 10px; display: none;"></p>
@@ -62,6 +73,7 @@
                 <div class="report-header">
                     <p>Relatório de Impacto Ambiental gerado para:</p>
                     <h2 id="nomeEmpresaRelatorio">---</h2>
+                    <p id="cenarioSimuladoText" class="cenario-simulado-text"></p>
                 </div>
                 
                 <hr>
