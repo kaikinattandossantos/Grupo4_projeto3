@@ -8,6 +8,7 @@ async function realizarAnalise() {
     const cnpj = document.getElementById('cnpjInput').value.trim();
     const email = document.getElementById('emailInput').value.trim();
     const volumeVal = document.getElementById('transacoesInput').value;
+    const migracaoVal = document.getElementById('migracaoInput').value; // NOVO
 
     if (cnpj.length > 0 && cnpj.length !== 14) {
         alert("Se preenchido, o CNPJ precisa ter exatamente 14 números!");
@@ -20,11 +21,18 @@ async function realizarAnalise() {
         return;
     }
 
+    let percentual = parseFloat(migracaoVal);
+    if (isNaN(percentual) || percentual < 0 || percentual > 100) {
+        alert("Por favor, insira um percentual válido entre 0 e 100.");
+        return;
+    }
+
     const payload = {
         nomeEmpresa: nome || null,
         cnpj: cnpj || null,
         email: email || null,
-        transacoes: volume
+        transacoes: volume,
+        percentualMigracao: percentual 
     };
 
     ocultarErro();
@@ -46,59 +54,52 @@ function gerarRelatorio() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const btnCalcular = document.getElementById('btnCalcular');
-    if (btnCalcular) {
-        btnCalcular.addEventListener('click', realizarAnalise);
-    }
+    if (btnCalcular) btnCalcular.addEventListener('click', realizarAnalise);
 
     const btnAbrirHistorico = document.getElementById('btnAbrirHistorico');
-    if (btnAbrirHistorico) {
-        btnAbrirHistorico.addEventListener('click', abrirModalHistorico);
-    }
+    if (btnAbrirHistorico) btnAbrirHistorico.addEventListener('click', abrirModalHistorico);
 
     const btnAbrirAdmin = document.getElementById('btnAbrirAdmin');
-    if (btnAbrirAdmin) {
-        btnAbrirAdmin.addEventListener('click', abrirModalAdmin);
-    }
+    if (btnAbrirAdmin) btnAbrirAdmin.addEventListener('click', abrirModalAdmin);
 
     const closeHistorico = document.getElementById('closeHistorico');
-    if (closeHistorico) {
-        closeHistorico.addEventListener('click', fecharModalHistorico);
-    }
+    if (closeHistorico) closeHistorico.addEventListener('click', fecharModalHistorico);
 
     const closeAdmin = document.getElementById('closeAdmin');
-    if (closeAdmin) {
-        closeAdmin.addEventListener('click', fecharModalAdmin);
-    }
+    if (closeAdmin) closeAdmin.addEventListener('click', fecharModalAdmin);
 
     const buscaHistorico = document.getElementById('buscaHistoricoInput');
-    if (buscaHistorico) {
-        buscaHistorico.addEventListener('keyup', filtrarHistorico);
-    }
+    if (buscaHistorico) buscaHistorico.addEventListener('keyup', filtrarHistorico);
 
     const btnSalvarFator = document.getElementById('btnSalvarFator');
-    if (btnSalvarFator) {
-        btnSalvarFator.addEventListener('click', salvarNovoFator);
-    }
+    if (btnSalvarFator) btnSalvarFator.addEventListener('click', salvarNovoFator);
 
     const btnExportar = document.getElementById('btnExportar');
-    if (btnExportar) {
-        btnExportar.addEventListener('click', gerarRelatorio);
-    }
+    if (btnExportar) btnExportar.addEventListener('click', gerarRelatorio);
 
     const btnExportarCSV = document.getElementById('btnExportarCSV');
-    if (btnExportarCSV) {
-        btnExportarCSV.addEventListener('click', baixarRelatorioCSV);
+    if (btnExportarCSV) btnExportarCSV.addEventListener('click', baixarRelatorioCSV);
+
+    const slider = document.getElementById('migracaoSlider');
+    const inputNum = document.getElementById('migracaoInput');
+
+    if (slider && inputNum) {
+        slider.addEventListener('input', (e) => {
+            inputNum.value = e.target.value;
+        });
+        inputNum.addEventListener('input', (e) => {
+            let val = parseFloat(e.target.value);
+            if (val >= 0 && val <= 100) {
+                slider.value = val;
+            }
+        });
     }
 
     window.addEventListener('click', (event) => {
         const modalHist = document.getElementById('modalHistorico');
         const modalAdm = document.getElementById('modalAdmin');
 
-        if (event.target === modalHist) {
-            fecharModalHistorico();
-        }
-        if (event.target === modalAdm) {
-            fecharModalAdmin();
-        }
+        if (event.target === modalHist) fecharModalHistorico();
+        if (event.target === modalAdm) fecharModalAdmin();
     });
 });

@@ -15,11 +15,17 @@ public class ResultadoCalculo {
     @Column(nullable = false)
     private Long qtdTransacoes;
 
-    @Column(nullable = false, precision = 15, scale = 5)
-    private BigDecimal impactoFisico;
+    @Column(nullable = true)
+    private Double percentualMigracao; // Guarda a % escolhida
 
     @Column(nullable = false, precision = 15, scale = 5)
-    private BigDecimal impactoDigital;
+    private BigDecimal impactoFisico; // Impacto se fosse 100% Físico
+
+    @Column(nullable = false, precision = 15, scale = 5)
+    private BigDecimal impactoDigital; // Impacto se fosse 100% Digital
+
+    @Column(nullable = true, precision = 15, scale = 5)
+    private BigDecimal impactoHibrido; // Impacto real da simulação parcial
 
     @Column(nullable = false, precision = 15, scale = 5)
     private BigDecimal co2Evitado;
@@ -44,9 +50,6 @@ public class ResultadoCalculo {
     @JoinColumn(name = "fator_digital_id", nullable = false)
     private FatorEmissao fatorDigital;
 
-    /* Permite o vínculo opcional com a Empresa. 
-       Se for um cálculo anónimo (apenas transações), este campo fica a null no banco.
-     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "empresa_id", nullable = true)
     private Empresa empresa;
@@ -55,17 +58,24 @@ public class ResultadoCalculo {
         this.dataCalculo = LocalDateTime.now();
     }
 
+    // --- GETTERS E SETTERS ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
     public Long getQtdTransacoes() { return qtdTransacoes; }
     public void setQtdTransacoes(Long qtdTransacoes) { this.qtdTransacoes = qtdTransacoes; }
 
+    public Double getPercentualMigracao() { return percentualMigracao; }
+    public void setPercentualMigracao(Double percentualMigracao) { this.percentualMigracao = percentualMigracao; }
+
     public BigDecimal getImpactoFisico() { return impactoFisico; }
     public void setImpactoFisico(BigDecimal impactoFisico) { this.impactoFisico = impactoFisico; }
 
     public BigDecimal getImpactoDigital() { return impactoDigital; }
     public void setImpactoDigital(BigDecimal impactoDigital) { this.impactoDigital = impactoDigital; }
+
+    public BigDecimal getImpactoHibrido() { return impactoHibrido; }
+    public void setImpactoHibrido(BigDecimal impactoHibrido) { this.impactoHibrido = impactoHibrido; }
 
     public BigDecimal getCo2Evitado() { return co2Evitado; }
     public void setCo2Evitado(BigDecimal co2Evitado) { this.co2Evitado = co2Evitado; }

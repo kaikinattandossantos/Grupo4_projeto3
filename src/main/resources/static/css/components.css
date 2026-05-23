@@ -408,3 +408,40 @@ button:active {
         transform: translateY(0);
     }
 }
+.slider-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.migracao-slider {
+    flex: 1;
+    accent-color: var(--primary-red);
+}
+
+.input-with-symbol {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.migracao-input-number {
+    width: 80px;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+.symbol-percent {
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.cenario-simulado-text {
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 5px;
+    font-weight: bold;
+}
