@@ -3,223 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calculadora de Impacto Ambiental Edenred GreenPay Impact - Calcule o CO2 evitado ao migrar de transações físicas para digitais.">
-    <meta name="author" content="Edenred">
     <title>GreenPay Impact | Edenred</title>
-    
-    <!-- Design System Modular CSS -->
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/modals.css">
-    
-    <!-- Icons & Core Libraries -->
+    <!-- Fonte Montserrat do Design System -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome para os ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link rel="stylesheet" href="css/landing.css">
 </head>
 <body>
-    <div class="container">
-        <main class="calculator-card">
-            <!-- Header Branding Section -->
-            <header>
-                <div class="brand-header">
-                    <img src="img/Edenred-logo.png" alt="Logo Edenred" class="brand-logo">
-                    <div class="logo-placeholder">EDENRED</div>
-                </div>
-                <h1>GreenPay Impact</h1>
-            </header>
-            
-            <!-- Simulation Inputs Section -->
-            <section class="input-section">
-                <div class="field">
-                    <label for="razaoSocialInput">Nome Fantasia / Razão Social <small>(Opcional)</small></label>
-                    <input type="text" id="razaoSocialInput" placeholder="Ex: Empresa Exemplo">
-                </div>
-                <div class="field">
-                    <label for="cnpjInput">CNPJ <small>(Opcional)</small></label>
-                    <input type="text" id="cnpjInput" maxlength="14" placeholder="Apenas números">
-                </div>
-                <div class="field">
-                    <label for="emailInput">E-mail de Contato <small>(Opcional)</small></label>
-                    <input type="email" id="emailInput" placeholder="contato@empresa.com">
-                </div>
-                <div class="field">
-                    <label for="transacoesInput">Volume de Transações Anuais <span style="color: var(--primary-red);">*</span></label>
-                    <input type="number" id="transacoesInput" min="1" placeholder="Ex: 500000" required>
-                </div>
 
-                <div class="field">
-                    <label for="migracaoInput">PERCENTUAL DE MIGRAÇÃO PARA O DIGITAL <span class="required">*</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="migracaoSlider" class="migracao-slider" min="0" max="100" value="100">
-                        <div class="input-with-symbol">
-                            <input type="number" id="migracaoInput" class="migracao-input-number" min="0" max="100" value="100">
-                            <span class="symbol-percent">%</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <button type="button" id="btnCalcular">Gerar Cálculo de Impacto</button>
-                <p id="msgErro" style="color: var(--danger); font-size: 0.85rem; font-weight: 600; margin-top: 10px; display: none;"></p>
-                
-                <button type="button" id="btnAbrirHistorico" class="btn-secondary">Ver Histórico de Análises</button>
-                <button type="button" id="btnAbrirAdmin" class="btn-secondary" style="border-color: #ffc107; color: #d39e00; margin-top: 10px;">Painel Admin: Gerenciar Fatores</button>
-            </section>
-            
-            <!-- Interactive Results Dashboard (Initially Hidden) -->
-            <section id="resultsSection" class="results-hidden">
-                <div class="report-header">
-                    <p>Relatório de Impacto Ambiental gerado para:</p>
-                    <h2 id="nomeEmpresaRelatorio">---</h2>
-                    <p id="cenarioSimuladoText" class="cenario-simulado-text"></p>
-                </div>
-                
-                <hr>
-                
-                <div class="metrics">
-                    <div class="metric-box">
-                        <span>CO₂ Evitado Estimado</span>
-                        <h2 id="co2EvitadoVal">0.00</h2>
-                        <small>kg por ano</small>
-                    </div>
-                </div>
-                
-                <div class="analogies-grid">
-                    <article class="analogy-card">
-                        <div class="icon-wrapper green-glow">
-                            <i class="fa-solid fa-tree" aria-hidden="true"></i>
-                        </div>
-                        <div class="analogy-content">
-                            <div class="analogy-header">
-                                <strong id="arvoresVal" class="analogy-value">0</strong>
-                                <span class="analogy-title">Árvores Plantadas</span>
-                            </div>
-                            <p id="arvoresText" class="analogy-desc">O equivalente ao cultivo anual destas árvores, purificando a atmosfera.</p>
-                        </div>
-                    </article>
-                    <article class="analogy-card">
-                        <div class="icon-wrapper blue-glow">
-                            <i class="fa-solid fa-car-side" aria-hidden="true"></i>
-                        </div>
-                        <div class="analogy-content">
-                            <div class="analogy-header">
-                                <strong id="kmVal" class="analogy-value">0</strong>
-                                <span class="analogy-title">Quilômetros evitados</span>
-                            </div>
-                            <p id="kmText" class="analogy-desc">O planeta poupou a fumaça de um veículo a combustão por esses Km rodados.</p>
-                        </div>
-                    </article>
-                    <article class="analogy-card">
-                        <div class="icon-wrapper teal-glow">
-                            <i class="fa-solid fa-bottle-water" aria-hidden="true"></i>
-                        </div>
-                        <div class="analogy-content">
-                            <div class="analogy-header">
-                                <strong id="garrafasVal" class="analogy-value">0</strong>
-                                <span class="analogy-title">Garrafas PET a menos</span>
-                            </div>
-                            <p id="garrafasText" class="analogy-desc">Impacto direto na despoluição de oceanos e desobstrução nos aterros sanitários.</p>
-                        </div>
-                    </article>
-                </div>
-                
-                <div class="chart-box">
-                    <canvas id="impactChart"></canvas>
-                </div>
-                
-                <div class="export-container">
-                    <button type="button" id="btnExportar" class="btn-export">
-                        <i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Gerar Relatório Executivo (PDF)
-                    </button>
-                    <button type="button" id="btnExportarCSV" class="btn-export">
-                        <i class="fa-solid fa-file-csv" aria-hidden="true"></i> Baixar Dados Brutos (CSV)
-                    </button>
-                </div>
-                
-            </section>
-        </main>
-    </div>
-
-    <!-- Modal: Simulation History -->
-    <div id="modalHistorico" class="modal" role="dialog" aria-modal="true" aria-labelledby="historicoTitle">
-        <div class="modal-content">
-            <span class="close" id="closeHistorico" role="button" aria-label="Fechar">&times;</span>
-            <h2 id="historicoTitle" class="modal-title">Histórico de Impacto</h2>
-            
-            <div style="margin-bottom: 15px;">
-                <input type="text" id="buscaHistoricoInput" placeholder="Buscar por Nome ou CNPJ...">
-            </div>
-
-            <div class="table-container">
-                <table id="tabelaHistorico">
-                    <thead>
-                        <tr>
-                            <th>Empresa</th>
-                            <th>CNPJ</th>
-                            <th>Data</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corpoHistorico">
-                        <!-- Dynamically Filled -->
-                    </tbody>
-                </table>
+    <!-- Navegação -->
+    <nav class="navbar">
+        <div class="brand">
+            <i class="fa-solid fa-leaf" style="color: var(--primary-red); font-size: 24px;"></i>
+            <div class="logo-text">
+                <strong>GreenPay Impact</strong>
+                <span>by Edenred</span>
             </div>
         </div>
-    </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Início</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#solucao">Solução</a></li>
+            <li><a href="#beneficios">Benefícios</a></li>
+        </ul>
+        <a href="calculadora.html" class="btn btn-primary">Acessar Plataforma</a>
+    </nav>
 
-    <!-- Modal: Administrative Emission Factors -->
-    <div id="modalAdmin" class="modal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
-        <div class="modal-content" style="max-width: 700px;">
-            <span class="close" id="closeAdmin" role="button" aria-label="Fechar">&times;</span>
-            <h2 id="adminTitle" class="modal-title" style="color: var(--primary-red);">Painel Admin - Fatores de Emissão</h2>
-            
-            <!-- Insert New Factor Form -->
-            <div class="admin-form-container">
-                <h3>Adicionar Novo Fator</h3>
-                <div class="admin-grid">
-                    <div class="field">
-                        <label for="fatorTipo">Tipo de Transação</label>
-                        <select id="fatorTipo">
-                            <option value="FISICA">FÍSICA</option>
-                            <option value="DIGITAL">DIGITAL</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="fatorValor">Valor (kg CO2e)</label>
-                        <input type="number" id="fatorValor" step="0.00001" placeholder="Ex: 0.0005" required>
-                    </div>
-                    <div class="field">
-                        <label for="fatorFonte">Fonte / Metodologia</label>
-                        <input type="text" id="fatorFonte" placeholder="Ex: GHG Protocol 2024" required>
-                    </div>
-                </div>
-                <button type="button" id="btnSalvarFator">Salvar Nova Versão</button>
+    <!-- Seção Hero -->
+    <header class="hero">
+        <div class="hero-content">
+            <div class="pill pill-light">
+                <i class="fa-solid fa-location-crosshairs"></i> Transforme dados em impacto ambiental real
             </div>
-
-            <!-- Historical Emission Factors Table -->
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Tipo</th>
-                            <th>Valor</th>
-                            <th>Fonte</th>
-                            <th>Data Vigência</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corpoTabelaFatores">
-                        <!-- Dynamically Filled -->
-                    </tbody>
-                </table>
+            <h1>Calcule o impacto <span class="highlight">ambiental</span> dos seus pagamentos digitais</h1>
+            <p>Descubra quanto <strong>CO₂, plástico</strong> e <strong>recursos naturais</strong> sua empresa economiza ao adotar soluções de pagamento digital da Edenred</p>
+            <div class="hero-buttons">
+                <a href="calculadora.html" class="btn btn-white">Começar agora <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#demo" class="btn btn-outline">Ver demonstração</a>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <h2>70%</h2>
+                    <span>Redução média</span>
+                </div>
+                <div class="stat-item">
+                    <h2>500+</h2>
+                    <span>Empresas ativas</span>
+                </div>
+                <div class="stat-item">
+                    <h2>2.5M</h2>
+                    <span>Toneladas CO₂ evitadas</span>
+                </div>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- Core Modular Logic Orchestrator -->
-    <script type="module" src="js/main.js"></script>
+    <!-- Seção Sobre -->
+    <section id="sobre" class="about">
+        <div class="about-left">
+            <div class="pill pill-red">
+                <i class="fa-solid fa-building"></i> Sobre a Edenred
+            </div>
+            <h2>Líderes globais em soluções de pagamento digital</h2>
+            <p>A Edenred é líder mundial em soluções de pagamento digital para empresas, colaboradores e comerciantes. Com presença em mais de 45 países, transformamos a forma como as empresas gerenciam benefícios e despesas.</p>
+            <p>Nosso compromisso com a sustentabilidade nos levou a criar o <strong>GreenPay Impact</strong>, uma ferramenta que quantifica o impacto ambiental positivo da digitalização de pagamentos.</p>
+            
+            <div class="about-icons">
+                <div class="icon-box">
+                    <div class="icon-circle red"><i class="fa-solid fa-globe"></i></div>
+                    <div>
+                        <strong>45+ países</strong>
+                        <span>Presença global</span>
+                    </div>
+                </div>
+                <div class="icon-box">
+                    <div class="icon-circle red"><i class="fa-solid fa-users"></i></div>
+                    <div>
+                        <strong>50M+ usuários</strong>
+                        <span>Em todo o mundo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="about-right">
+            <div class="mission-card">
+                <div class="mission-icon"><i class="fa-solid fa-medal"></i></div>
+                <h3>Nossa missão ambiental</h3>
+                <p>Traduzir o impacto ambiental através da digitalização, eliminando milhões de cartões plásticos e reduzindo emissões de CO₂ associadas à produção e logística.</p>
+                <div class="mission-stats">
+                    <div>
+                        <h4>-85%</h4>
+                        <span>Plástico</span>
+                    </div>
+                    <div>
+                        <h4>-70%</h4>
+                        <span>CO₂</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Solução -->
+    <section id="solucao" class="solution">
+        <div class="section-header">
+            <div class="pill pill-red"><i class="fa-solid fa-lightbulb"></i> Nossa Solução</div>
+            <h2>Como o GreenPay Impact funciona</h2>
+            <p>Uma plataforma completa para calcular, visualizar e reportar o impacto ambiental das suas operações de pagamento</p>
+        </div>
+        
+        <div class="solution-grid">
+            <div class="solution-card">
+                <div class="card-icon" style="color: #e2001a; background: #ffe5e8;"><i class="fa-solid fa-calculator"></i></div>
+                <h3>1. Calculadora de Impacto</h3>
+                <p>Insira dados da sua empresa como número de colaboradores e transações mensais. Nossa metodologia cientificamente validada calcula o impacto ambiental.</p>
+                <a href="index.html" class="saber-mais">Saber mais <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            <div class="solution-card">
+                <div class="card-icon" style="color: var(--primary-blue); background: #e8eaf6;"><i class="fa-solid fa-chart-simple"></i></div>
+                <h3>2. Dashboard Interativo</h3>
+                <p>Visualize métricas consolidadas, comparações físico vs digital, tendências históricas e equivalências ambientais em tempo real.</p>
+                <a href="index.html" class="saber-mais">Saber mais <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            <div class="solution-card">
+                <div class="card-icon" style="color: #20c997; background: #e6f9f3;"><i class="fa-solid fa-file-arrow-down"></i></div>
+                <h3>3. Relatórios ESG</h3>
+                <p>Exporte relatórios detalhados para integrar aos seus reportes de sustentabilidade e comunicações ESG corporativas.</p>
+                <a href="index.html" class="saber-mais">Saber mais <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Benefícios -->
+    <section id="beneficios" class="benefits">
+        <div class="section-header">
+            <div class="pill pill-green"><i class="fa-solid fa-leaf"></i> Benefícios</div>
+            <h2>Por que usar o GreenPay Impact</h2>
+        </div>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <i class="fa-solid fa-arrow-trend-down" style="color: #e2001a;"></i>
+                <h4>Redução de CO₂</h4>
+                <p>Mensura a economia de emissões com pagamentos digitais.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-droplet" style="color: var(--primary-blue);"></i>
+                <h4>Menos Plástico</h4>
+                <p>Elimina toneladas de cartões plásticos descartáveis.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-thumbs-up" style="color: #20c997;"></i>
+                <h4>Impacto Positivo</h4>
+                <p>Contribui ativamente para metas de sustentabilidade.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-regular fa-circle-check" style="color: #fcb900;"></i>
+                <h4>Conformidade ESG</h4>
+                <p>Relatórios prontos para auditorias e comunicações.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="cta-bottom">
+        <h2>Pronto para calcular seu impacto?</h2>
+        <p>Junte-se a centenas de empresas que já estão medindo e reduzindo seu impacto ambiental</p>
+        <a href="calculadora.html" class="btn btn-white">Começar gratuitamente <i class="fa-solid fa-arrow-right"></i></a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="brand">
+                    <i class="fa-solid fa-leaf" style="color: var(--primary-red); font-size: 20px;"></i>
+                    <div class="logo-text">
+                        <strong>GreenPay Impact</strong>
+                        <span>by Edenred</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Produto</h4>
+                <ul>
+                    <li><a href="#">Calculadora</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Relatórios</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Empresa</h4>
+                <ul>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Contato</a></li>
+                    <li><a href="#">Carreiras</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacidade</a></li>
+                    <li><a href="#">Termos</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Edenred. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    <!-- Modal: Ver Demonstração -->
+        <div id="modalDemo" class="lp-modal">
+            <div class="lp-modal-content" style="max-width: 800px;">
+                <span class="lp-modal-close" onclick="fecharModal('modalDemo')">&times;</span>
+                <h2 style="margin-bottom: 20px; color: var(--primary-blue);">Veja a plataforma em ação</h2>
+                <!-- Substitua o src pelo link do YouTube ou coloque uma tag <video> local -->
+                <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+                    <iframe src="https://www.youtube.com/embed/SEU_LINK_AQUI?autoplay=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 8px;" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal: Saber Mais 1 -->
+        <div id="modalSaber1" class="lp-modal">
+            <div class="lp-modal-content">
+                <span class="lp-modal-close" onclick="fecharModal('modalSaber1')">&times;</span>
+                <h2 style="color: var(--primary-blue);">Precisão baseada em Dados Reais</h2>
+                <p style="margin-top: 15px; color: var(--text-muted);">Nossa calculadora utiliza métricas validadas por metodologias globais (como o GHG Protocol). Basta inserir o volume de transações e simular o cenário de migração da sua empresa para descobrir, com precisão matemática, o impacto que a sua operação gera hoje.</p>
+                <img src="img/print-calculadora.png" alt="Print Calculadora" class="lp-modal-img">
+            </div>
+        </div>
+        
+    <script src="js/landing.js"></script>
 </body>
 </html>

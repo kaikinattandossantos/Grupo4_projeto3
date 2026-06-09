@@ -1,0 +1,336 @@
+/* Variáveis do Design System Edenred */
+:root {
+    --primary-red: #E2001A;
+    --primary-blue: #162056; 
+    --accent-green: #caf880; 
+    --text-dark: #121211;
+    --text-muted: #454543;
+    --bg-light: #fafafa;
+    --font-main: 'Montserrat', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.logo-text strong { color: var(--text-dark); font-size: 18px; }
+.logo-text span { color: var(--text-muted); font-size: 11px; }
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.nav-links a.active, .nav-links a:hover {
+    color: var(--primary-red);
+}
+
+/* Botões */
+.btn {
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-primary { background: var(--primary-red); color: #fff; }
+.btn-primary:hover { background: #c30016; }
+
+.btn-white { background: #fff; color: var(--primary-red); }
+.btn-white:hover { background: #f2f2f2; }
+
+.btn-outline { border: 1px solid #fff; color: #fff; background: transparent; }
+.btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+/* Pills (Tags) */
+.pill {
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.pill-light { background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+.pill-red { background: #ffe5e8; color: var(--primary-red); }
+.pill-green { background: #e6f9f3; color: #20c997; }
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-blue) 100%);
+    color: #fff;
+    padding: 100px 5%;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 45px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.hero h1 .highlight { color: var(--accent-green); }
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 60px;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 60px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 40px;
+}
+
+.stat-item h2 { font-size: 38px; margin-bottom: 5px; }
+.stat-item span { font-size: 14px; opacity: 0.8; }
+
+/* Sobre */
+.about {
+    padding: 100px 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    background: #fff;
+}
+
+.about h2 { font-size: 38px; margin-bottom: 20px; color: var(--primary-blue); }
+.about p { margin-bottom: 20px; color: var(--text-muted); }
+
+.about-icons {
+    display: flex;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.icon-box { display: flex; align-items: center; gap: 15px; }
+.icon-circle {
+    width: 45px; height: 45px; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+}
+.icon-circle.red { background: #ffe5e8; color: var(--primary-red); }
+
+.icon-box div { display: flex; flex-direction: column; }
+.icon-box strong { color: var(--primary-blue); font-size: 18px; }
+.icon-box span { color: var(--text-muted); font-size: 13px; }
+
+.mission-card {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-blue) 100%);
+    border-radius: 20px;
+    padding: 50px 40px;
+    color: #fff;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.mission-icon {
+    font-size: 30px; margin-bottom: 20px;
+}
+
+.mission-card h3 { font-size: 25px; margin-bottom: 15px; }
+.mission-card p { opacity: 0.9; margin-bottom: 30px; color: #fff; }
+
+.mission-stats { display: flex; gap: 40px; }
+.mission-stats h4 { font-size: 30px; margin-bottom: 5px; }
+.mission-stats span { font-size: 14px; opacity: 0.8; }
+
+/* Solução */
+.solution { padding: 100px 5%; background: var(--bg-light); }
+.section-header { text-align: center; max-width: 600px; margin: 0 auto 60px auto; }
+.section-header h2 { font-size: 38px; color: var(--primary-blue); margin-bottom: 15px; }
+.section-header p { color: var(--text-muted); }
+
+.solution-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.solution-card {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.card-icon {
+    width: 50px; height: 50px; border-radius: 10px;
+    display: flex; justify-content: center; align-items: center; font-size: 20px; margin-bottom: 25px;
+}
+
+.solution-card h3 { font-size: 18px; margin-bottom: 15px; color: var(--primary-blue); }
+.solution-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; min-height: 60px; }
+.saber-mais { color: var(--primary-red); text-decoration: none; font-weight: 600; font-size: 14px; }
+
+/* Benefícios */
+.benefits { padding: 100px 5%; background: #fff; }
+.benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 40px; }
+.benefit-card { background: var(--bg-light); padding: 30px; border-radius: 15px; }
+.benefit-card i { font-size: 24px; margin-bottom: 15px; }
+.benefit-card h4 { font-size: 16px; margin-bottom: 10px; color: var(--primary-blue); }
+.benefit-card p { font-size: 13px; color: var(--text-muted); }
+
+/* CTA Bottom */
+.cta-bottom {
+    background: var(--primary-red);
+    color: #fff;
+    text-align: center;
+    padding: 80px 5%;
+}
+
+.cta-bottom h2 { font-size: 38px; margin-bottom: 15px; }
+.cta-bottom p { font-size: 18px; margin-bottom: 30px; opacity: 0.9; }
+
+/* Footer */
+footer { background: var(--primary-blue); color: #fff; padding: 60px 5% 20px 5%; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+.footer-links h4 { margin-bottom: 20px; font-size: 16px; }
+.footer-links ul { list-style: none; }
+.footer-links ul li { margin-bottom: 10px; }
+.footer-links a { color: #fff; text-decoration: none; opacity: 0.7; font-size: 14px; transition: 0.3s; }
+.footer-links a:hover { opacity: 1; }
+.footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; opacity: 0.6; }
+
+/* Responsividade Básica */
+@media(max-width: 992px) {
+    .about, .solution-grid, .benefits-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-direction: column; gap: 30px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+html {
+    scroll-behavior: smooth;
+}
+
+/* Classes para a animação de Fade-In no Scroll */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    will-change: opacity, visibility;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Estilo Genérico para os Modais da Landing Page */
+.lp-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(22, 32, 86, 0.8); /* Azul da Edenred escurecido */
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lp-modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+}
+
+.lp-modal-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    max-width: 700px;
+    width: 90%;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.lp-modal.show .lp-modal-content {
+    transform: scale(1);
+}
+
+.lp-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.lp-modal-img {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
