@@ -48,6 +48,7 @@ function App() {
   const [showCalculator, setShowCalculator] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
+  const [showVideoModal, setShowVideoModal] = useState(false);
 
   const scrollToSection = (id: string) => {
     setShowCalculator(false);
@@ -107,12 +108,6 @@ function App() {
       setShowCalculator(JSON.parse(savedShowCalc));
     }
 
-    // Restore resultado
-    const savedResultado = localStorage.getItem('resultado_simulacao');
-    if (savedResultado !== null) {
-      setResultado(JSON.parse(savedResultado));
-    }
-
     // Scroll listener to save position
     const handleScroll = () => {
       localStorage.setItem('scroll_position', window.scrollY.toString());
@@ -126,14 +121,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem('show_calculator', JSON.stringify(showCalculator));
   }, [showCalculator]);
-
-  useEffect(() => {
-    if (resultado) {
-      localStorage.setItem('resultado_simulacao', JSON.stringify(resultado));
-    } else {
-      localStorage.removeItem('resultado_simulacao');
-    }
-  }, [resultado]);
 
   const carregarHistorico = async () => {
     try {
@@ -274,6 +261,24 @@ function App() {
     }
   };
 
+  const handlePrintPDF = () => {
+    // A função nativa do navegador para imprimir/guardar como PDF
+    window.print();
+  };
+
+  const handleDownloadCSV = () => {
+    if (!resultado) return;
+    const cabecalho = "Empresa,CNPJ,Transacoes,Percentual_Migracao,Impacto_Fisico_kg,Impacto_Hibrido_kg,Impacto_Digital_kg,CO2_Evitado_kg,Arvores_Salvas,Km_Evitados,PET_Evitadas\n";
+    const linha = `${resultado.empresa?.nomeEmpresa || 'Sem Nome'},${resultado.empresa?.cnpj || 'Sem CNPJ'},${resultado.qtdTransacoes || transacoes},${resultado.percentualMigracao}%,${resultado.impactoFisico},${resultado.impactoHibrido},${resultado.impactoDigital},${resultado.co2Evitado},${resultado.arvoresEquivalentes},${resultado.kmEvitados},${resultado.garrafasPetEvitadas}\n`;
+    const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(cabecalho + linha);
+    const link = document.createElement("a");
+    link.setAttribute("href", csvContent);
+    link.setAttribute("download", `relatorio_impacto_${resultado.empresa?.nomeEmpresa?.replace(/\s+/g, '_') || 'edenred'}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleVerImpactoDoHistorico = async (id: number) => {
     try {
       const response = await fetch(`http://localhost:8081/api/empresas/${id}/impacto`);
@@ -300,7 +305,7 @@ function App() {
     <div className="font-sans antialiased text-text-main bg-zinc-100 min-h-screen flex flex-col justify-start items-center">
 
       {/* HEADER NAVBAR */}
-      <header className="w-full bg-white/95 border-b border-black/10 fixed top-0 left-0 z-40 transition-all duration-300">
+      <header className="w-full bg-white/95 border-b border-black/10 fixed top-0 left-0 z-40 transition-all duration-300 print:hidden">
         <div className="max-w-7xl mx-auto h-20 px-6 flex justify-between items-center">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => setShowCalculator(false)}>
             <div className="p-2 bg-primary-red rounded-[5px] flex flex-col justify-start items-start">
@@ -324,7 +329,7 @@ function App() {
               className="w-auto h-11 px-6 bg-primary-red rounded-[5px] shadow-md hover:shadow-lg text-sm font-semibold"
               onClick={() => setShowCalculator(true)}
             >
-              Acessar Plataforma
+              Acessar Calculadora
             </Button>
           </nav>
         </div>
@@ -332,11 +337,14 @@ function App() {
 
       {/* RENDER CALCULATOR VIEW OR LANDING PAGE */}
       {showCalculator ? (
-        <main className="w-full pt-32 pb-24 px-4 sm:px-6 max-w-7xl mx-auto flex flex-col gap-8">
-          <div className="flex items-center justify-between">
+        <main className="w-full pt-32 pb-24 px-4 sm:px-6 max-w-7xl mx-auto flex flex-col gap-8 print:pt-0 print:pb-0 print:px-0 print:block animate-slide-up">
+          <div className="flex items-center justify-between print:hidden">
             <button
-              onClick={() => setShowCalculator(false)}
-              className="text-text-muted hover:text-text-main font-semibold text-sm flex items-center gap-2 transition-all cursor-pointer"
+              onClick={() => {
+                setShowCalculator(false);
+                setResultado(null);
+              }}
+              className="text-text-muted hover:text-text-main font-semibold text-sm flex items-center gap-2 transition-all cursor-pointer print:hidden"
             >
               <i className="fa-solid fa-arrow-left" /> Voltar para Home
             </button>
@@ -345,14 +353,14 @@ function App() {
                 <i className="fa-solid fa-history" /> Ver Histórico
               </Button>
               <Button variant="secondary" className="w-auto py-2 px-4 text-xs border-amber-500 text-amber-600 hover:bg-amber-50" onClick={() => setShowAdmin(true)}>
-                <i className="fa-solid fa-cog" /> Painel Admin
+                <i className="fa-solid fa-cog" /> Fatores de Emissão
               </Button>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
             {/* Input Form Column */}
-            <section className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-xl border border-text-light/20 flex flex-col gap-6">
+            <section className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-xl border border-text-light/20 flex flex-col gap-6 print:hidden">
               <h2 className="text-lg font-bold text-text-main border-b border-text-light/10 pb-3 flex items-center gap-2">
                 <i className="fa-solid fa-calculator text-primary-red" /> Nova Simulação
               </h2>
@@ -411,9 +419,9 @@ function App() {
             </section>
 
             {/* Results Column */}
-            <section id="results-dashboard" className="lg:col-span-3 flex flex-col gap-6">
+            <section id="results-dashboard" className="lg:col-span-3 flex flex-col gap-6 print:block print:w-full">
               {resultado ? (
-                <div className="bg-white p-6 rounded-2xl shadow-xl border border-text-light/20 flex flex-col gap-6 animate-fade-in">
+                <div className="bg-white p-6 rounded-2xl shadow-xl border border-text-light/20 flex flex-col gap-6 animate-fade-in print:shadow-none print:border-none print:p-0">
                   <div className="border-b border-text-light/10 pb-4">
                     <p className="text-xs font-bold text-text-muted uppercase tracking-wider">Relatório gerado para:</p>
                     <h2 className="text-2xl font-bold text-text-main mt-1">{resultado.empresa?.nomeEmpresa || 'Empresa Simulada'}</h2>
@@ -453,35 +461,93 @@ function App() {
                   </div>
 
                   {/* SVG Chart Comparison */}
-                  <div className="border border-text-light/20 p-5 rounded-xl bg-bg-hover flex flex-col gap-4">
+                  <div className="border border-text-light/20 p-6 rounded-xl bg-bg-hover flex flex-col gap-6 w-full">
                     <h3 className="text-sm font-bold text-text-main uppercase tracking-wider flex items-center gap-2">
-                      <i className="fa-solid fa-chart-bar text-accent-blue" /> Comparação de Emissões (kg CO₂e)
+                      <i className="fa-solid fa-chart-column text-accent-blue"></i> Comparação de Emissões (kg CO₂e)
                     </h3>
-                    <div className="flex flex-col gap-4 py-2">
-                      <div>
-                        <div className="flex justify-between text-xs font-bold mb-1">
-                          <span>Física (Sem Migração)</span>
-                          <span>{(resultado.impactoFisico || 0).toLocaleString('pt-BR', { maximumFractionDigits: 0 })} kg</span>
+
+                    {(() => {
+                      // Trava de segurança para evitar divisão por zero
+                      const maxImpacto = resultado.impactoFisico || 1;
+                      const alturaFisico = 100; 
+                      const alturaHibrido = Math.max(2, Math.min(100, (resultado.impactoHibrido / maxImpacto) * 100));
+                      const alturaDigital = Math.max(2, Math.min(100, (resultado.impactoDigital / maxImpacto) * 100));
+
+                      return (
+                        <div className="relative w-full pt-8 pb-2">
+                          {/* Linhas de Grade (Grid Lines) */}
+                          <div className="absolute inset-0 flex flex-col justify-end gap-10 pointer-events-none opacity-10 z-0 pb-6">
+                            <div className="border-t border-text-main w-full"></div>
+                            <div className="border-t border-text-main w-full"></div>
+                            <div className="border-t border-text-main w-full"></div>
+                          </div>
+
+                  {/* Container das 3 Barras */}
+                          <div className="flex items-end justify-around h-56 w-full border-b-2 border-text-light/30 relative z-10 pb-1">
+                            
+                            {/* BARRA 1: 100% Físico */}
+                            {/* A CORREÇÃO: Adicionado 'h-full' e 'justify-end' nesta linha abaixo */}
+                            <div className="flex flex-col items-center justify-end gap-2 w-1/3 h-full group">
+                              <span className="text-xs font-bold text-text-muted transition-colors group-hover:text-text-main">
+                                {resultado.impactoFisico?.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} kg
+                              </span>
+                              <div 
+                                className="w-full max-w-[64px] bg-primary-red rounded-t-md transition-all duration-1000 ease-out shadow-sm"
+                                style={{ height: `${alturaFisico}%` }}
+                              ></div>
+                            </div>
+
+                            {/* BARRA 2: Cenário Híbrido */}
+                            <div className="flex flex-col items-center justify-end gap-2 w-1/3 h-full group">
+                              <span className="text-xs font-bold text-orange-500 transition-colors group-hover:text-orange-600">
+                                {resultado.impactoHibrido?.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} kg
+                              </span>
+                              <div 
+                                className="w-full max-w-[64px] bg-orange-400 rounded-t-md transition-all duration-1000 ease-out shadow-md"
+                                style={{ height: `${alturaHibrido}%` }}
+                              ></div>
+                            </div>
+
+                            {/* BARRA 3: 100% Digital */}
+                            <div className="flex flex-col items-center justify-end gap-2 w-1/3 h-full group">
+                              <span className="text-xs font-bold text-text-muted transition-colors group-hover:text-text-main">
+                                {resultado.impactoDigital?.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} kg
+                              </span>
+                              <div 
+                                className="w-full max-w-[64px] bg-accent-green rounded-t-md transition-all duration-1000 ease-out shadow-sm"
+                                style={{ height: `${alturaDigital}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                          {/* Legendas Base */}
+                          <div className="flex justify-around items-start w-full mt-3">
+                            <span className="text-[11px] font-bold text-text-main text-center w-1/3">100% Físico</span>
+                            <span className="text-[11px] font-bold text-text-main text-center w-1/3">Cenário Híbrido</span>
+                            <span className="text-[11px] font-bold text-text-main text-center w-1/3">100% Digital</span>
+                          </div>
                         </div>
-                        <div className="w-full bg-text-light/30 h-4 rounded-full overflow-hidden">
-                          <div className="bg-primary-red h-full rounded-full transition-all duration-1000" style={{ width: '100%' }} />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-xs font-bold mb-1">
-                          <span>Digital (Com Migração)</span>
-                          <span>{(resultado.impactoDigital || 0).toLocaleString('pt-BR', { maximumFractionDigits: 0 })} kg</span>
-                        </div>
-                        <div className="w-full bg-text-light/30 h-4 rounded-full overflow-hidden">
-                          <div
-                            className="bg-accent-green h-full rounded-full transition-all duration-1000"
-                            style={{ width: `${resultado.impactoFisico ? Math.max(10, Math.min(100, ((resultado.impactoDigital || 0) / resultado.impactoFisico) * 100)) : 0}%` }}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                      );
+                    })()}
+                  </div>
+                  {/* NOVOS BOTÕES DE EXPORTAÇÃO */}
+                  <div className="flex flex-col sm:flex-row justify-end gap-4 mt-2 pt-6 border-t border-text-light/20 print:hidden">
+                    <Button
+                      variant="secondary"
+                      className="bg-white border border-text-light/30 text-text-main hover:bg-zinc-50"
+                      onClick={handleDownloadCSV}
+                    >
+                      <i className="fa-solid fa-file-csv text-accent-green text-lg" /> Baixar Dados Brutos (.csv)
+                    </Button>
+                    <Button
+                      variant="primary"
+                      className="bg-blue-950 text-white hover:bg-blue-900 border-none"
+                      onClick={handlePrintPDF}
+                    >
+                      <i className="fa-solid fa-file-pdf text-red-400 text-lg" /> Gerar Relatório Executivo (PDF)
+                    </Button>
                   </div>
                 </div>
+                
               ) : (
                 <div className="bg-white p-12 rounded-2xl shadow-xl border border-text-light/20 flex flex-col items-center justify-center text-center gap-4 text-text-muted">
                   <div className="w-16 h-16 rounded-full bg-bg-page flex items-center justify-center text-2xl text-text-light">
@@ -498,7 +564,7 @@ function App() {
         </main>
       ) : (
         /* LANDING PAGE FROM FIGMA DESIGN */
-        <div className="w-full pt-20 flex flex-col justify-start items-start">
+        <div className="w-full pt-20 flex flex-col justify-start items-start print:hidden animate-slide-up">
 
           {/* HERO BANNER SECTION */}
           <section className="relative w-full h-[700px] md:h-[800px] bg-gradient-to-br from-primary-red via-primary-red via-[7%] to-blue-950 overflow-hidden flex flex-col justify-center items-center px-6 text-center">
@@ -530,7 +596,7 @@ function App() {
                   <span className="text-primary-red">Começar agora</span> <i className="fa-solid fa-arrow-right ml-2 text-primary-red" />
                 </Button>
                 <button
-                  onClick={() => scrollToSection('solucao')}
+                  onClick={() => setShowVideoModal(true)}
                   className="w-full py-4 text-center text-white text-base font-bold bg-white/10 hover:bg-white/20 border border-white/30 rounded-lg transition-all cursor-pointer"
                 >
                   Ver demonstração
@@ -646,12 +712,6 @@ function App() {
                   <p className="text-neutral-700 text-sm leading-relaxed">
                     Insira dados da sua empresa como número de colaboradores e transações mensais. Nossa metodologia cientificamente validada calcula o impacto ambiental.
                   </p>
-                  <button
-                    onClick={() => setShowCalculator(true)}
-                    className="mt-auto flex items-center gap-2 text-primary-red text-sm font-bold hover:underline cursor-pointer"
-                  >
-                    Saber mais <i className="fa-solid fa-arrow-right text-xs" />
-                  </button>
                 </article>
 
                 <article className="p-8 bg-gradient-to-br from-zinc-100 via-neutral-100 to-white rounded-2xl border border-black/10 flex flex-col justify-start items-start gap-6 hover:shadow-lg transition-all duration-300">
@@ -662,12 +722,6 @@ function App() {
                   <p className="text-neutral-700 text-sm leading-relaxed">
                     Visualize métricas consolidadas, comparações físico vs digital, tendências históricas e equivalências ambientais em tempo real.
                   </p>
-                  <button
-                    onClick={() => setShowCalculator(true)}
-                    className="mt-auto flex items-center gap-2 text-blue-950 text-sm font-bold hover:underline cursor-pointer"
-                  >
-                    Saber mais <i className="fa-solid fa-arrow-right text-xs" />
-                  </button>
                 </article>
 
                 <article className="p-8 bg-gradient-to-br from-zinc-100 via-neutral-100 to-white rounded-2xl border border-black/10 flex flex-col justify-start items-start gap-6 hover:shadow-lg transition-all duration-300">
@@ -678,12 +732,6 @@ function App() {
                   <p className="text-neutral-700 text-sm leading-relaxed">
                     Exporte relatórios detalhados para integrar aos seus reportes de sustentabilidade e comunicações ESG corporativas.
                   </p>
-                  <button
-                    onClick={() => setShowCalculator(true)}
-                    className="mt-auto flex items-center gap-2 text-emerald-600 text-sm font-bold hover:underline cursor-pointer"
-                  >
-                    Saber mais <i className="fa-solid fa-arrow-right text-xs" />
-                  </button>
                 </article>
               </div>
             </div>
@@ -767,7 +815,7 @@ function App() {
       )}
 
       {/* FOOTER */}
-      <footer className="w-full py-16 bg-blue-950 px-6 text-white">
+      <footer className="w-full py-16 bg-blue-950 px-6 text-white print:hidden">
         <div className="max-w-7xl mx-auto flex flex-col gap-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
             <div className="md:col-span-2 flex flex-col gap-4">
@@ -886,13 +934,13 @@ function App() {
         </div>
       )}
 
-      {/* MODAL: ADMINISTRATIVE EMISSION FACTORS */}
+      {/* MODAL: EMISSION FACTORS */}
       {showAdmin && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 animate-fade-in">
           <div className="bg-white rounded-2xl shadow-2xl border border-text-light/20 w-full max-w-3xl max-h-[90vh] flex flex-col p-6 overflow-hidden">
             <div className="flex items-center justify-between border-b border-text-light/10 pb-4 mb-4">
               <h2 className="text-xl font-bold text-primary-red flex items-center gap-2">
-                <i className="fa-solid fa-sliders text-primary-red" /> Painel Admin - Fatores de Emissão
+                <i className="fa-solid fa-sliders text-primary-red" /> Painel Fatores de Emissão
               </h2>
               <button onClick={() => setShowAdmin(false)} className="text-text-muted hover:text-text-main text-2xl font-bold leading-none cursor-pointer">
                 &times;
@@ -991,7 +1039,41 @@ function App() {
           </div>
         </div>
       )}
-
+      {/* MODAL: VÍDEO DE DEMONSTRAÇÃO */}
+      {showVideoModal && (
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in" 
+          onClick={() => setShowVideoModal(false)}
+        >
+          <div 
+            className="bg-bg-page rounded-2xl shadow-2xl border border-text-light/20 w-full max-w-4xl flex flex-col overflow-hidden animate-slide-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-text-light/10 p-4 bg-white">
+              <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+                <i className="fa-brands fa-youtube text-primary-red" /> Demonstração GreenPay Impact
+              </h2>
+              <button 
+                onClick={() => setShowVideoModal(false)} 
+                className="text-text-muted hover:text-text-main text-2xl font-bold leading-none cursor-pointer px-2"
+              >
+                &times;
+              </button>
+            </div>
+            
+            <div className="relative w-full pt-[56.25%] bg-black">
+              <iframe 
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/8TAH1gXBQlQ?si=qZAyUd_izubobBJP"  
+                title="Demonstração da Plataforma" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

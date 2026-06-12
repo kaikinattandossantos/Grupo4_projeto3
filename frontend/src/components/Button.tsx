@@ -13,8 +13,7 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseStyles = 'w-full py-3 px-4 rounded-lg font-semibold text-sm transition-all duration-300 ease-in-out cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm focus:outline-hidden focus:ring-2 focus:ring-offset-2';
-  
+  const baseStyles = 'w-full py-3 px-4 rounded-lg font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:shadow-sm flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed';
   const variants = {
     primary: 'bg-primary-red hover:bg-primary-red-hover text-white focus:ring-primary-red',
     secondary: 'bg-transparent border border-text-muted hover:bg-bg-hover text-text-main focus:ring-text-muted',
