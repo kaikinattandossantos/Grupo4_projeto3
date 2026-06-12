@@ -31,8 +31,8 @@ Comparação entre transações físicas e digitais com base em fatores de emiss
 ### 🌳 Analogias Ambientais
 Conversão dos resultados em equivalências mais intuitivas:
 
-Árvores plantadas
-Quilômetros de carro evitados
+Árvores plantadas |
+Quilômetros de carro evitados |
 Garrafas PET equivalentes
 
 ### 📈 Simulação Percentual de Migração Digital
@@ -44,8 +44,8 @@ Consulta de análises realizadas anteriormente.
 ### 📄 Exportação de Relatórios
 Exportação dos resultados em:
 
-PDF
-CSV
+- PDF
+- CSV
 
 ### ⚙️ Gestão de Fatores de Emissão
 
@@ -54,7 +54,7 @@ Atualização dinâmica dos fatores ambientais utilizados nos cálculos.
 ## 🎥 Demonstração da Solução
 Screencast Final
 
-🔗 [INSERIR LINK DO SCREENCAST FINAL]
+🔗 [link para o Screencast](https://youtu.be/O4OnSplAEHQ)
 
 O vídeo demonstra o fluxo completo da plataforma, incluindo:
 
@@ -112,24 +112,26 @@ Garrafas PET equivalentes
 O objetivo é tornar os resultados mais compreensíveis para usuários corporativos.
 
 ## 🛠️ Tecnologias Utilizadas
-Backend
-Java 25
-Spring Boot 3.5
-Spring Data JPA
-Hibernate
-PostgreSQL
-Maven
-Frontend
-HTML5
-CSS3
-JavaScript ES6
-Gestão e Colaboração
-GitHub
-GitHub Issues
-ClickUp
-Figma
-Canva
+### Backend
+* **Java 25**: Linguagem de programação principal da API.
+* **Spring Boot 3.5**: Framework para criação e configuração rápida da aplicação.
+* **Spring Data JPA / Hibernate**: Mapeamento objeto-relacional (ORM) e abstração do banco.
+* **PostgreSQL**: Banco de dados relacional.
+* **Maven**: Gerenciamento de dependências e build do projeto Java.
 
+### Frontend
+* **React 19**: Biblioteca moderna para construção da interface de usuário (UI).
+* **TypeScript**: Superset do JavaScript que adiciona tipagem estática e segurança ao código.
+* **Tailwind CSS v4**: Framework de CSS utilitário para estilização rápida e responsiva.
+* **Vite**: Ferramenta de build de altíssima performance para o ecossistema web.
+* **Node.js**: Ambiente de execução necessário para o gerenciamento de pacotes (`npm`) e build.
+* *(Base estrutural em HTML5, CSS3 e JavaScript ES6).*
+
+### Gestão e Colaboração
+* **GitHub & GitHub Issues**: Plataforma de versionamento de código e rastreamento de tarefas.
+* **ClickUp**: Gerenciamento ágil de projetos e organização do fluxo de trabalho.
+* **Figma**: Prototipação de alta fidelidade e design do sistema visual.
+* **Canva**: Criação de materiais gráficos, apresentações e recursos visuais.
 ---
 
 ## 👥 Equipe
@@ -159,15 +161,15 @@ Para uma melhor qualidade e eficiência no nosso projeto dividimos nossa equipe 
 
 O projeto foi desenvolvido utilizando uma divisão organizacional baseada em três frentes:
 
-Gestão
+- Gestão
 
 Responsável pelo planejamento das sprints, acompanhamento das entregas e organização geral do projeto.
 
-Negócios
+- Negócios
 
 Responsável pela pesquisa dos fatores ambientais, validações com cliente, levantamento de requisitos e construção da proposta de valor.
 
-Tech
+- Tech
 
 Responsável pela implementação técnica da solução, modelagem de dados, desenvolvimento da API e construção da interface.
 
@@ -214,13 +216,14 @@ Para nosso projeto utilizamos baseado em Git Flow Simplificado e Commits Semânt
 
 ### 🚀 Requisitos e Como Executar
 
-####  Pré-requisitos Técnicos
+#### Pré-requisitos Técnicos
 Antes de rodar a aplicação localmente, certifique-se de ter instalado em sua máquina:
 * **Java JDK 21**: Ambiente de execução e compilação da API Spring Boot.
+* **Node.js (v18 ou superior)**: Motor JavaScript necessário para compilar a interface moderna em React. O `npm` já vem incluído nele.
 * **Maven 3.8+**: Gerenciador de dependências (opcional, visto que o projeto já inclui o utilitário nativo `mvnw`).
 * **PostgreSQL**: Banco de dados relacional para a persistência e rastreabilidade das simulações.
 
-####  1. Configuração do Banco de Dados
+#### 1. Configuração do Banco de Dados
 A aplicação utiliza persistência automatizada e parametrização dinâmica de dados. Antes de iniciar o servidor, configure o seu ambiente local no PostgreSQL:
 
 1. Crie um banco de dados vazio com o nome exato de: `edenred_db`
@@ -228,28 +231,35 @@ A aplicação utiliza persistência automatizada e parametrização dinâmica de
    * **Usuário:** `postgres`
    * **Senha:** `3456`
 
-> ** Nota de Praticidade:** Não é necessário executar nenhum script SQL manual para criar tabelas ou inserir registros iniciais. Graças à propriedade `ddl-auto=update` do Spring Data JPA e ao componente automático `DataInitializer`, toda a estrutura relacional (tabelas de empresas, histórico de resultados de cálculos, fatores de emissão e analogias científicas) é gerada e populada com os dados de referência no exato momento em que a aplicação é iniciada pela primeira vez.
+> **Nota de Praticidade:** Não é necessário executar nenhum script SQL manual para criar tabelas ou inserir registros iniciais. Graças à propriedade `ddl-auto=update` do Spring Data JPA e ao componente automático `DataInitializer`, toda a estrutura relacional (tabelas de empresas, histórico de resultados de cálculos, fatores de emissão e analogias científicas) é gerada e populada com os dados de referência no exato momento em que a aplicação é iniciada pela primeira vez.
 
-####  2. Como Executar a Aplicação
+#### 2. Como Executar a Aplicação
 
-1. Abra o seu terminal e navegue até a pasta raiz do projeto:
+Nossa arquitetura conta com um Frontend em React e um Backend em Spring Boot. Para executar a aplicação unificada na mesma porta, siga os passos abaixo:
+
+1. Abra o seu terminal, navegue até a pasta do frontend e instale as dependências:
 ```bash
-cd calculadora
+cd calculadora/frontend
+npm install
 ```
-2. Certifique-se de que o serviço do seu PostgreSQL está ativo e rodando em segundo plano.
-3. Execute o comando do Maven Wrapper para compilar o ecossistema e iniciar o servidor embutido do Spring Boot:
+2. Gere a versão otimizada de produção (Build) da interface:
+```bash
+npm run build
+```
+3. O comando acima criará uma pasta chamada **dist**. Copie todos os arquivos de dentro dela e cole-os no diretório estático do Java: **calculadora/src/main/resources/static/** (substitua os antigos).
+4. Retorne o terminal para a pasta raiz do projeto (cd ..), certifique-se de que o PostgreSQL está rodando, e inicie o servidor Spring Boot:
 ```bash
 ./mvnw spring-boot:run
 ```
-4. Aguarde a mensagem de confirmação no console indicando que o Tomcat foi iniciado com sucesso na porta **8081**.
+5. Aguarde a mensagem de confirmação no console indicando que o Tomcat foi iniciado com sucesso na porta 8081.
 
 ####  3. Acesso à Interface do Usuário
 
-Com o servidor backend ativo, abra o seu navegador de preferência e acesse o endereço do ecossistema modular:
+Com o servidor backend ativo e os arquivos visuais injetados, abra o seu navegador de preferência e acesse o endereço do ecossistema modular:
 ```url
 http://localhost:8081/
 ```
-*(Caso queira acessar o arquivo estático diretamente pelo mapeamento, utilize: `http://localhost:8081/index.html`)*
+(Caso queira focar apenas no desenvolvimento visual do Frontend, recomendamos utilizar o comando npm run dev na pasta frontend para ativar o servidor com Hot-Reload na porta 5173).
 
 ---
 
