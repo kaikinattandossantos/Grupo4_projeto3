@@ -347,6 +347,22 @@ Nesta etapa, consolidamos a maturidade arquitetural da calculadora e aprimoramos
 
   ### Screencast 4
   [link para o Screencast](https://youtu.be/51KsWhH2UIw?si=riOcFOz8eDW5vQ3p)
+  
+---
+
+##  Declaração de Uso de Inteligência Artificial
+
+Durante o desenvolvimento deste projeto, ferramentas de Inteligência Artificial foram utilizadas de forma ética, consciente e complementar ao processo de aprendizagem. Seu uso esteve restrito ao apoio em atividades como:
+
+* Pesquisa e consulta de informações;
+* Esclarecimento de conceitos técnicos;
+* Apoio na formatação e organização de códigos;
+* Revisão de textos e documentação;
+* Sugestões de melhorias em estrutura, usabilidade e boas práticas de desenvolvimento.
+
+> **Nota de Autoria:** Todas as decisões de projeto, implementações realizadas, validações e adaptações foram conduzidas pela equipe, que analisou criticamente as sugestões geradas pelas ferramentas utilizadas. Dessa forma, a Inteligência Artificial foi empregada como instrumento de apoio à produtividade e ao aprendizado, não substituindo a participação ativa, o raciocínio crítico e a autoria dos integrantes no desenvolvimento da solução apresentada.
+
+---
 
 ## 📄 Licença
 
