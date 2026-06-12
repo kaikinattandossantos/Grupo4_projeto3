@@ -1,11 +1,12 @@
-##🌿 GreenPay Impact
-##📖 Sobre o Projeto
+# 🌿 GreenPay Impact
+
+## 📖 Sobre o Projeto
 
 A GreenPay Impact é uma plataforma desenvolvida em parceria com a Edenred com o objetivo de demonstrar, de forma clara e mensurável, os benefícios ambientais da migração de pagamentos físicos para meios digitais.
 
 A solução permite que a empresa simule diferentes cenários de digitalização, visualizem a redução de emissões de CO₂ e compreendam esse impacto através de analogias ambientais intuitivas, auxiliando iniciativas ESG e processos de tomada de decisão.
 
-##🎯 Problema
+## 🎯 Problema
 
 Embora a digitalização dos meios de pagamento seja uma realidade crescente, muitas empresas ainda possuem dificuldade em visualizar e comunicar o impacto ambiental positivo dessa transformação.
 
@@ -13,47 +14,44 @@ Nesse contexto, a GreenPay Impact busca responder à seguinte pergunta:
 
 Quanto impacto ambiental uma empresa pode evitar ao migrar parte de suas transações físicas para meios digitais?
 
-##💡 Solução
+## 💡 Solução
 
 A GreenPay Impact funciona como uma calculadora de impacto ambiental corporativa, permitindo que empresas comparem cenários físicos e digitais e obtenham indicadores claros sobre os benefícios ambientais da digitalização.
 
 A plataforma utiliza fatores de emissão ambientais e equivalências ambientais para transformar números técnicos em informações facilmente compreensíveis.
 
-##✨ Principais Funcionalidades
-📊 Dashboard Ambiental
+## ✨ Principais Funcionalidades
 
+### 📊 Dashboard Ambiental
 Visualização consolidada dos principais indicadores ambientais calculados pela plataforma.
 
-🧮 Simulação de Impacto Ambiental
-
+### 🧮 Simulação de Impacto Ambiental
 Comparação entre transações físicas e digitais com base em fatores de emissão parametrizados.
 
-🌳 Analogias Ambientais
-
+### 🌳 Analogias Ambientais
 Conversão dos resultados em equivalências mais intuitivas:
 
 Árvores plantadas
 Quilômetros de carro evitados
 Garrafas PET equivalentes
-📈 Simulação Percentual de Migração Digital
 
+### 📈 Simulação Percentual de Migração Digital
 Permite simular cenários mais realistas, considerando migrações parciais das transações físicas para meios digitais.
 
-🕒 Histórico de Simulações
-
+### 🕒 Histórico de Simulações
 Consulta de análises realizadas anteriormente.
 
-📄 Exportação de Relatórios
-
+### 📄 Exportação de Relatórios
 Exportação dos resultados em:
 
 PDF
 CSV
-⚙️ Gestão de Fatores de Emissão
+
+### ⚙️ Gestão de Fatores de Emissão
 
 Atualização dinâmica dos fatores ambientais utilizados nos cálculos.
 
-##🎥 Demonstração da Solução
+## 🎥 Demonstração da Solução
 Screencast Final
 
 🔗 [INSERIR LINK DO SCREENCAST FINAL]
@@ -69,7 +67,7 @@ Exportação CSV
 Simulação percentual de migração digital
 
 
-##🏗️ Arquitetura da Solução
+## 🏗️ Arquitetura da Solução
 
 O projeto foi desenvolvido seguindo uma arquitetura em camadas baseada em Spring Boot.
 
@@ -90,7 +88,7 @@ FatorConversaoAnalogia
 
 Responsável pelas equivalências ambientais utilizadas nas analogias apresentadas ao usuário.
 
-🌎 Metodologia Ambiental
+## 🌎 Metodologia Ambiental
 
 A GreenPay Impact utiliza fatores de emissão estimados com base em referências como:
 
@@ -113,7 +111,7 @@ Garrafas PET equivalentes
 
 O objetivo é tornar os resultados mais compreensíveis para usuários corporativos.
 
-🛠️ Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
 Backend
 Java 25
 Spring Boot 3.5
@@ -157,7 +155,7 @@ Para uma melhor qualidade e eficiência no nosso projeto dividimos nossa equipe 
 
 ---
 
-##📋 Processo de Desenvolvimento
+## 📋 Processo de Desenvolvimento
 
 O projeto foi desenvolvido utilizando uma divisão organizacional baseada em três frentes:
 
@@ -340,6 +338,6 @@ Nesta etapa, consolidamos a maturidade arquitetural da calculadora e aprimoramos
   ### Screencast 4
   [link para o Screencast](https://youtu.be/51KsWhH2UIw?si=riOcFOz8eDW5vQ3p)
 
-##📄 Licença
+## 📄 Licença
 
 Projeto acadêmico desenvolvido para a disciplina Projeto 3 da CESAR School em parceria com a Edenred.
