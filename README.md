@@ -1,12 +1,136 @@
-# 🌿 GreenPay Impact
+##🌿 GreenPay Impact
+##📖 Sobre o Projeto
 
-O desafio proposto pela Edenred é criar uma forma de **comparar o impacto ambiental entre transações feitas com cartões físicos e pagamentos digitais**. A ideia é ajudar empresas e clientes a entenderem melhor os benefícios da digitalização das operações, principalmente em relação à redução de emissões de carbono e uso de materiais físicos.
+A GreenPay Impact é uma plataforma desenvolvida em parceria com a Edenred com o objetivo de demonstrar, de forma clara e mensurável, os benefícios ambientais da migração de pagamentos físicos para meios digitais.
 
----
+A solução permite que a empresa simule diferentes cenários de digitalização, visualizem a redução de emissões de CO₂ e compreendam esse impacto através de analogias ambientais intuitivas, auxiliando iniciativas ESG e processos de tomada de decisão.
 
-## 📌 Proposta
+##🎯 Problema
 
-Propomos a criação de uma **calculadora de impacto ambiental** capaz de estimar indicadores como emissões de CO₂, consumo de energia, uso de materiais físicos e impactos logísticos relacionados à produção e distribuição de cartões. A partir dessas estimativas, buscamos permitir **comparações que ajudem a visualizar melhor esses impactos** e entender como a adoção de soluções digitais pode contribuir para a redução desses efeitos.
+Embora a digitalização dos meios de pagamento seja uma realidade crescente, muitas empresas ainda possuem dificuldade em visualizar e comunicar o impacto ambiental positivo dessa transformação.
+
+Nesse contexto, a GreenPay Impact busca responder à seguinte pergunta:
+
+Quanto impacto ambiental uma empresa pode evitar ao migrar parte de suas transações físicas para meios digitais?
+
+##💡 Solução
+
+A GreenPay Impact funciona como uma calculadora de impacto ambiental corporativa, permitindo que empresas comparem cenários físicos e digitais e obtenham indicadores claros sobre os benefícios ambientais da digitalização.
+
+A plataforma utiliza fatores de emissão ambientais e equivalências ambientais para transformar números técnicos em informações facilmente compreensíveis.
+
+##✨ Principais Funcionalidades
+📊 Dashboard Ambiental
+
+Visualização consolidada dos principais indicadores ambientais calculados pela plataforma.
+
+🧮 Simulação de Impacto Ambiental
+
+Comparação entre transações físicas e digitais com base em fatores de emissão parametrizados.
+
+🌳 Analogias Ambientais
+
+Conversão dos resultados em equivalências mais intuitivas:
+
+Árvores plantadas
+Quilômetros de carro evitados
+Garrafas PET equivalentes
+📈 Simulação Percentual de Migração Digital
+
+Permite simular cenários mais realistas, considerando migrações parciais das transações físicas para meios digitais.
+
+🕒 Histórico de Simulações
+
+Consulta de análises realizadas anteriormente.
+
+📄 Exportação de Relatórios
+
+Exportação dos resultados em:
+
+PDF
+CSV
+⚙️ Gestão de Fatores de Emissão
+
+Atualização dinâmica dos fatores ambientais utilizados nos cálculos.
+
+##🎥 Demonstração da Solução
+Screencast Final
+
+🔗 [INSERIR LINK DO SCREENCAST FINAL]
+
+O vídeo demonstra o fluxo completo da plataforma, incluindo:
+
+Landing Page
+Simulação de impacto
+Analogias ambientais
+Histórico
+Exportação PDF
+Exportação CSV
+Simulação percentual de migração digital
+
+
+##🏗️ Arquitetura da Solução
+
+O projeto foi desenvolvido seguindo uma arquitetura em camadas baseada em Spring Boot.
+
+Entidades Principais
+Empresa
+
+Armazena os dados empresariais utilizados nas simulações.
+
+ResultadoCalculo
+
+Responsável por registrar e manter o histórico de todos os cálculos realizados.
+
+FatorEmissao
+
+Armazena os fatores ambientais utilizados nos cálculos, permitindo rastreabilidade e atualização das metodologias.
+
+FatorConversaoAnalogia
+
+Responsável pelas equivalências ambientais utilizadas nas analogias apresentadas ao usuário.
+
+🌎 Metodologia Ambiental
+
+A GreenPay Impact utiliza fatores de emissão estimados com base em referências como:
+
+IPCC
+GHG Protocol
+Mastercard
+IDEMIA
+Thales
+Fator Físico
+0,0005 kg CO₂ por transação
+Fator Digital
+0,00002 kg CO₂ por transação
+Analogias Ambientais
+
+As emissões evitadas são convertidas em:
+
+Árvores equivalentes
+Quilômetros de carro evitados
+Garrafas PET equivalentes
+
+O objetivo é tornar os resultados mais compreensíveis para usuários corporativos.
+
+🛠️ Tecnologias Utilizadas
+Backend
+Java 25
+Spring Boot 3.5
+Spring Data JPA
+Hibernate
+PostgreSQL
+Maven
+Frontend
+HTML5
+CSS3
+JavaScript ES6
+Gestão e Colaboração
+GitHub
+GitHub Issues
+ClickUp
+Figma
+Canva
 
 ---
 
@@ -33,6 +157,23 @@ Para uma melhor qualidade e eficiência no nosso projeto dividimos nossa equipe 
 
 ---
 
+##📋 Processo de Desenvolvimento
+
+O projeto foi desenvolvido utilizando uma divisão organizacional baseada em três frentes:
+
+Gestão
+
+Responsável pelo planejamento das sprints, acompanhamento das entregas e organização geral do projeto.
+
+Negócios
+
+Responsável pela pesquisa dos fatores ambientais, validações com cliente, levantamento de requisitos e construção da proposta de valor.
+
+Tech
+
+Responsável pela implementação técnica da solução, modelagem de dados, desenvolvimento da API e construção da interface.
+
+---
 ## ⚙️ Fluxo de Versionamento
 Para nosso projeto utilizamos baseado em Git Flow Simplificado e Commits Semânticos para uma organização completa do nosso repositório
 
@@ -70,21 +211,6 @@ Para nosso projeto utilizamos baseado em Git Flow Simplificado e Commits Semânt
     4. **Pull Request (PR):** Após a conclusão da tarefa, envie sua branch para o repositório remoto (`git push origin feature/nome-da-tarefa`) e abra um Pull Request apontando de volta para a branch `develop`.
     5. **Code Review e Merge:** O código deve ser revisado por ao menos um outro membro da equipe. Após a aprovação, o merge é realizado e a branch de feature pode ser descartada
     6. **Lançamento (Release para a Main):** Quando a branch `develop` acumular um conjunto de funcionalidades estáveis e testadas, é aberto um Pull Request final da `develop` para a `main`. Após a aprovação deste merge, a nova versão do sistema entra oficialmente em produção (MVP).
-
----
-
-### ✨ Arquitetura e Principais Funcionalidades
-
-O projeto evoluiu para uma arquitetura de API RESTful robusta, focada em rastreabilidade de dados ESG e experiência do usuário (UX) corporativa B2B.
-
-* **Persistência e Rastreabilidade (Auditoria ESG):** Todo cálculo gerado é gravado de forma imutável no banco de dados. O sistema congela o ID exato do Fator de Emissão que estava vigente no milissegundo da simulação, garantindo que o histórico nunca seja corrompido caso os referenciais matemáticos mudem no futuro.
-* **Modelagem de Dados Normalizada:** O banco de dados foi estruturado com base em 4 entidades altamente coesas:
-  * `Empresa`: Cadastro puramente comercial (focado em fluxo opcional).
-  * `FatorEmissao`: Motor matemático com suporte a *Soft Delete* (arquivamento de versões obsoletas).
-  * `FatorConversaoAnalogia`: Parametrização 100% dinâmica das analogias científicas (Árvores, Km, Garrafas PET), eliminando valores chumbados (*hardcoded*) no código.
-  * `ResultadoCalculo`: Entidade central que une transações, resultados brutos, equivalências e a data exata.
-* **Cálculo Expresso (Foco em Conversão):** A API foi refatorada para aceitar simulações anônimas. O usuário preenche apenas o volume de transações, reduzindo o atrito (barreira de entrada) e gerando um relatório inteligente de "Simulação Expressa".
-* **Busca Instantânea em Memória:** A modal de histórico no frontend conta com um filtro reativo (`onkeyup`) que pesquisa por Nome Fantasia e CNPJ em tempo real, sem sobrecarregar o banco de dados.
 
 ---
 
@@ -214,3 +340,6 @@ Nesta etapa, consolidamos a maturidade arquitetural da calculadora e aprimoramos
   ### Screencast 4
   [link para o Screencast](https://youtu.be/51KsWhH2UIw?si=riOcFOz8eDW5vQ3p)
 
+##📄 Licença
+
+Projeto acadêmico desenvolvido para a disciplina Projeto 3 da CESAR School em parceria com a Edenred.
